@@ -1,0 +1,23 @@
+[
+  {
+    "id": "usr-drpurva",
+    "name": "Dr. Purva",
+    "email": "purvaoceanadventures@gmail.com",
+    "salt": "feefad561e3916c29228fec07ef00a31",
+    "passwordHash": "e2e2c63dbda813c278c27a6197cac47d4d7c6b8bd5ca77939769e030301c4812661e225507c3b0f4a32275a4daff0ffebc0ef0c7781bd5d5d2828d985c8d4aed",
+    "role": "owner",
+    "status": "active",
+    "createdAt": "2026-11-07T16:58:51.070Z",
+    "lastLoginAt": "2026-11-12T20:16:10.677Z"
+  },
+  {
+    "id": "usr-editor",
+    "name": "Content Editor",
+    "email": "editor@purvaoceanadventures.com",
+    "salt": "e7ed8f0763294f422d94e3c3e6c6d66e",
+    "passwordHash": "bd39cf12b602b6be8e4a898ce6e467d1dfb5d38023aa62305420b86f9e10ff756704b921b07a3c3557bff7d79827bac9ee1c1240e1c738277a1d842efc4a6b3c",
+    "role": "editor",
+    "status": "active",
+    "createdAt": "2026-11-07T16:58:51.168Z"
+  }
+]

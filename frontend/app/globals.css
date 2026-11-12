@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/*
+ * PURVA OCEAN ADVENTURES — design tokens
+ * Colours are initial design references (not official brand tokens).
+ * Change them here only; components consume them via Tailwind utilities
+ * (e.g. bg-abyss, text-gold, border-sky/30).
+ */
+@theme {
+  --color-abyss: #010f20; /* Midnight Navy */
+  --color-navy: #031f38; /* Deep Ocean Navy */
+  --color-ocean: #1a4b70; /* Ocean Blue */
+  --color-marine: #0061a9; /* Marine Blue */
+  --color-sky: #66b4e2; /* Light Ocean Blue */
+  --color-gold: #e8c58f; /* Champagne Gold — restrained accent */
+  --color-foam: #ffffff; /* White */
+
+  --font-serif: var(--font-serif-face), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-sans-face), "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 1.25rem;
+  --radius-media: 1rem;
+
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-page-enter: page-enter 800ms var(--ease-cinematic) both;
+  --animate-fade-up: fade-up 900ms var(--ease-cinematic) both;
+  --animate-trip-pop: trip-pop 550ms var(--ease-cinematic) both;
+
+  --container-page: 80rem;
+}
+
+@keyframes trip-pop {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.97) translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-bubble {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.35;
+  }
+  85% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+@keyframes caustic-drift {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.16;
+  }
+  50% {
+    transform: scale(1.06) translateY(-10px);
+    opacity: 0.28;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-12deg);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.03);
+  }
+}
+
+.animate-caustic {
+  animation: caustic-drift 14s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-abyss);
+    color: var(--color-foam);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  html.light {
+    --color-abyss: #f4f8fb;
+    --color-navy: #e2eef7;
+    --color-foam: #011832;
+    color-scheme: light;
+  }
+
+  html.dark {
+    --color-abyss: #010f20;
+    --color-navy: #031f38;
+    --color-foam: #ffffff;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+    background-color: var(--color-abyss);
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 6vw, 5.5rem);
+  }
+  h2 {
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  }
+  h3 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+  }
+
+  /* Visible focus for keyboard users — gold keeps it on-brand */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-abyss);
+  }
+}
+
+@layer components {
+  /* Uppercase, restrained-tracking label used for eyebrows and buttons */
+  .label-caps {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .text-balance-serif-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hairline {
+    border-color: color-mix(in oklab, var(--color-sky) 22%, transparent);
+  }
+}
+
+/* Respect reduced-motion preferences globally. GSAP utilities also check this. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide Next.js development indicator badge */
+nextjs-portal,
+[data-nextjs-dev-tools-button],
+#nextjs-dev-tools-button {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

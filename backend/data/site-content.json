@@ -1,0 +1,979 @@
+{
+  "trips": [
+    {
+      "slug": "maafushi-madness-maldives",
+      "name": "Maafushi Madness Maldives - Live Test",
+      "tagline": "Channel Drifts, Nurse Sharks & Crystal Turquoise Lagoons",
+      "destination": "South Male Atoll",
+      "dates": "22–27 November 2026",
+      "duration": "6 Days / 5 Nights",
+      "dives": "10 Guided Boat Dives",
+      "experienceLevel": "Open Water Diver & Above",
+      "groupSize": "Small Group (Max 10 Divers)",
+      "coverImage": "/media/maafushi-maldives.jpg",
+      "galleryImages": [
+        "/media/maafushi-maldives.jpg",
+        "/media/gallery-diver-anthias.jpg",
+        "/media/gallery-sharks-reef.jpg",
+        "/media/gallery-coral-formation.jpg"
+      ],
+      "summary": "Join us on an unforgettable dive expedition to Maafushi, Maldives. Explore thrilling channel dives, nurse shark gatherings, manta ray cleaning stations, and crystal clear waters.",
+      "overview": "Maafushi Madness is our signature Maldivian ocean expedition designed for passionate divers who crave world-class underwater encounters without compromise. Centered around South Malé Atoll, this journey takes you to iconic channel passes where strong ocean currents bring schools of pelagics, friendly nurse sharks, spotted eagle rays, and gliding manta rays. On land, you'll experience vibrant Maldivian island culture, pristine white sandbanks, and warm ocean camaraderie with your fellow dive buddies.",
+      "highlights": [
+        "Epic Shark Point encounter with dozens of friendly nurse sharks",
+        "Gliding with manta rays at active cleaning stations",
+        "Kandooma Thila & Cocoa Corner exhilarating channel drift dives",
+        "Speedboat safari to secluded sandbanks in crystal turquoise lagoons",
+        "Small diver-to-guide ratio (max 4:1) with certified PADI dive masters",
+        "Complete logistics handled from the moment you land at Malé airport"
+      ],
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Arrival in Paradise & Island Welcome",
+          "subtitle": "Speedboat Transfer • Sunset Briefing",
+          "description": "Arrive at Velana International Airport (Malé). Our expedition team meets you at the arrivals gate for a private speedboat transfer across turquoise atoll waters to Maafushi Island. Check into your deluxe beachside hotel, unpack your dive gear, and enjoy a sunset welcome orientation over fresh coconuts.",
+          "highlights": [
+            "Airport meet & greet",
+            "Scenic 35-min speedboat ride",
+            "Expedition briefing"
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Check Dive & The Walls of Kandooma",
+          "subtitle": "2 Boat Dives • Coral Channels",
+          "description": "Start the morning with a gentle checkout dive at Maafushi Corner to dial in buoyancy and check weights. After a surface interval with tropical fruits, drop in at Kandooma Thila — one of the top ten dive sites in the Maldives — featuring dramatic coral swim-throughs and schools of giant trevally.",
+          "highlights": [
+            "Buoyancy check dive",
+            "Kandooma Thila coral walls",
+            "Green turtles & morays"
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Nurse Shark Safari & Deep Thila",
+          "subtitle": "2 Boat Dives • Pelagic Action",
+          "description": "Today is the headline shark encounter. Descend onto a sandy plateau where dozens of resident nurse sharks and stingrays gather. Watch these majestic animals cruise effortlessly around you. The second dive explores Guraidhoo Corner, famous for grey reef sharks patrolling the drop-off.",
+          "highlights": [
+            "Nurse shark gatherings",
+            "Guraidhoo Corner outer reef",
+            "Eagle rays in formation"
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Manta Ray Cleaning Stations & Drift Dive",
+          "subtitle": "2 Boat Dives • Manta Magic",
+          "description": "Head out to a renowned manta cleaning station. Hover motionless above the reef as giant oceanic and reef manta rays swoop gracefully over coral heads to be cleaned by cleaner wrasse. Afternoon drift dive over kaleidoscopic soft coral fields.",
+          "highlights": [
+            "Manta ray encounters",
+            "Vibrant soft coral walls",
+            "Afternoon bikini beach time"
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Final Ocean Dives & Deserted Sandbank Sunset",
+          "subtitle": "2 Boat Dives • Private Sandbank Barbecue",
+          "description": "Complete your final 2 morning dives exploring pristine coral pinnacles packed with anthias, clownfish, and reef octopuses. In the afternoon, board our boat for a trip to a private, uninhabited sandbank in the middle of the lagoon. Celebrate an unforgettable trip with a beach sunset dinner.",
+          "highlights": [
+            "Pinnacle coral gardens",
+            "Private sandbank excursion",
+            "Celebratory farewell dinner"
+          ]
+        },
+        {
+          "day": 6,
+          "title": "Surface Interval & Homeward Journey",
+          "subtitle": "Island Breakfast • Speedboat to Malé",
+          "description": "Enjoy a leisurely tropical breakfast overlooking the ocean. Complete your surface interval, log your dives, and take final island photos. Speedboat transfer back to Malé airport for your homeward flights.",
+          "highlights": [
+            "Dive log stamping",
+            "Airport speedboat transfer",
+            "Lifelong ocean memories"
+          ]
+        }
+      ],
+      "inclusions": [
+        "5 Nights deluxe island accommodation in Maafushi",
+        "10 guided boat dives with certified PADI Divemasters",
+        "Roundtrip airport speedboat transfers (Malé MLE ↔ Maafushi)",
+        "Daily breakfast & dive-day lunch / snacks on boat",
+        "12L aluminum tanks, weights, belts & Nitrox for certified divers",
+        "All Maldivian marine park fees, green tax & service charges",
+        "Exclusive Purva Ocean Adventures expedition rashguard & dry bag",
+        "High-resolution underwater photos & videos taken by our team"
+      ],
+      "exclusions": [
+        "International airfare to Velana International Airport (MLE)",
+        "Full dive equipment rental (BCD, regulator, wetsuit available for rent)",
+        "Mandatory dive travel insurance (DAN, World Nomads or equivalent)",
+        "Personal expenses, alcoholic beverages & crew gratuities"
+      ],
+      "requirements": [
+        "Minimum certification: PADI Open Water Diver (or equivalent)",
+        "Minimum logged dives: 5 dives recommended",
+        "Valid passport with at least 6 months validity",
+        "Signed standard PADI medical statement prior to departure"
+      ],
+      "pricing": {
+        "displayText": "₹89,999 / $1,080 per diver",
+        "note": "Early bird pricing valid until slots fill. Double occupancy. Solo supplement available."
+      },
+      "available": true
+    },
+    {
+      "slug": "lakshadweep-love",
+      "name": "Lakshadweep Love",
+      "tagline": "Untouched Coral Atolls, Sea Turtle Sanctuaries & Pure Isolation",
+      "destination": "Lakshadweep Islands, India",
+      "dates": "26–31 January 2027",
+      "duration": "6 Days / 5 Nights",
+      "dives": "12 Guided Boat & Lagoon Dives",
+      "experienceLevel": "Open Water Diver & Snorkelers",
+      "groupSize": "Intimate Group (Max 8 Divers)",
+      "coverImage": "/media/lakshadweep-love.jpg",
+      "galleryImages": [
+        "/media/lakshadweep-love.jpg",
+        "/media/gallery-reef-panorama.jpg",
+        "/media/gallery-coral-formation.jpg",
+        "/media/gallery-diver-selfie.jpg"
+      ],
+      "summary": "Discover the untouched paradise of Lakshadweep. Dive into crystal clear waters with vibrant sea turtles, pristine coral formations, dramatic drop-offs, and remote tropical atoll adventures.",
+      "overview": "Lakshadweep Love takes you to India's best-kept marine secret. Far removed from commercial tourist trails, the coral atolls of Lakshadweep boast visibility often exceeding 35 meters, healthy table coral gardens that stretch as far as the eye can see, and a thriving population of resident green sea turtles. With strictly regulated tourism permits, you'll dive reefs that have seen virtually zero human footprint. This trip is designed for curious souls looking for pure nature, peaceful island rhythms, and world-class tropical diving.",
+      "highlights": [
+        "Diving alongside friendly green sea turtles in crystal clear shallows",
+        "Spectacular visibility averaging 30 to 40 meters",
+        "Untouched coral reef gardens and dramatic outer barrier drop-offs",
+        "All restricted entry permits & heritage documentation fully handled",
+        "Explore remote atolls with tranquil turquoise lagoons",
+        "Small intimate expedition group with personalized coaching"
+      ],
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Flight into Agatti & Arrival in Paradise",
+          "subtitle": "Scenic Atoll Flight • Lagoon Check-In",
+          "description": "Board your flight from Kochi (COK) to Agatti (AGX) — famous as one of the world's most spectacular airstrips surrounded entirely by turquoise sea. Meet your Purva team, complete permit checks, transfer to your seaside resort, and take a sunset swim in the calm lagoon.",
+          "highlights": [
+            "World-famous atoll runway landing",
+            "Permit clearance handled",
+            "Welcome coconut drink"
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Lagoon Checkout & Turtle Garden",
+          "subtitle": "2 Boat Dives • Coral Shallows",
+          "description": "Ease into the water with a gentle dive inside the protective reef. Meet resident green and hawksbill turtles grazing on sea grass. Dive two explores Coral Garden, where massive brain and staghorn corals teem with clownfish, blue tangs, and butterflyfish.",
+          "highlights": [
+            "Check dive in calm lagoon",
+            "Turtle Garden shallow drift",
+            "Colorful reef biodiversity"
+          ]
+        },
+        {
+          "day": 3,
+          "title": "The Outer Reef Barrier & Shark Point",
+          "subtitle": "3 Boat Dives • Deep Visibility",
+          "description": "Head through the channel to the open ocean outer reef wall. Here the depth drops into deep indigo. Marvel at gorgonian sea fans, passing mobula rays, and curious blacktip reef sharks patrolling the outer drop-off in 40-meter crystal visibility.",
+          "highlights": [
+            "Outer barrier drop-offs",
+            "Mobula rays & blacktips",
+            "Breathtaking blue water visibility"
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Cavern Swim-Throughs & Shipwreck Site",
+          "subtitle": "3 Boat Dives • Underwater Topography",
+          "description": "Explore underwater arches, cavern swim-throughs, and an ancient reef shipwreck colonized by thousands of glassfish and lionfish. Afternoon surface interval includes traditional island snacks and coconut tree groves walk.",
+          "highlights": [
+            "Swim-through caverns",
+            "Reef wreck marine habitat",
+            "Island cultural walk"
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Final Pinnacle Dives & Sunset Bonfire",
+          "subtitle": "2 Boat Dives • Beach Barbecue",
+          "description": "Complete your final 2 morning dives on an isolated coral pinnacle where pelagics cruise by in the morning light. Spend the afternoon kayaking the lagoon before gathering around a beachfront barbecue with stargazing under unpolluted skies.",
+          "highlights": [
+            "Pinnacle reef drift",
+            "Lagoon kayaking",
+            "Stargazing & farewell barbecue"
+          ]
+        },
+        {
+          "day": 6,
+          "title": "Morning Farewell & Flight to Kochi",
+          "subtitle": "Breakfast • Airport Transfer",
+          "description": "Enjoy a final sunrise over the turquoise atoll. Transfer to Agatti Airport for your flight back to Kochi, taking with you unforgettable memories of India's purest ocean frontier.",
+          "highlights": [
+            "Sunrise beach walk",
+            "Flight back to Kochi",
+            "Expedition debrief"
+          ]
+        }
+      ],
+      "inclusions": [
+        "5 Nights beachfront cottage accommodation in Lakshadweep",
+        "12 guided boat & lagoon dives with certified PADI dive masters",
+        "Complete Lakshadweep entry permit processing & police clearance",
+        "All inter-island transfers and boat charters",
+        "All daily meals (freshly caught fish, local coastal curries & vegetarian options)",
+        "12L tanks, weight belts, and surface marker buoys (SMB)",
+        "Complimentary kayak & paddleboard access during free hours",
+        "Purva Ocean Adventures expedition pack & dive log stamps"
+      ],
+      "exclusions": [
+        "Flights to and from Agatti (Kochi ↔ Agatti roundtrip)",
+        "Personal scuba equipment rental (BCD, regulator, fins)",
+        "Mandatory dive travel insurance",
+        "Personal shopping and souvenirs"
+      ],
+      "requirements": [
+        "Minimum certification: PADI Open Water Diver (or beginner resort courses available)",
+        "Indian or foreign passport required for Lakshadweep entry permit issuance",
+        "Permit applications close 25 days before departure date"
+      ],
+      "pricing": {
+        "displayText": "₹74,999 per diver",
+        "note": "Permits strictly limited per departure. Bookings close 30 days prior to departure."
+      },
+      "available": true
+    },
+    {
+      "slug": "maldives-dive-expedition",
+      "name": "Maldives Dive Expedition",
+      "tagline": "The Ultimate Central Atolls Liveaboard & Pelagic Safari",
+      "destination": "Ari, Vaavu & Malé Atolls, Maldives",
+      "dates": "February 2027 (Dates Will Be Out Soon)",
+      "duration": "7 Days / 6 Nights",
+      "dives": "15+ Boat & Night Dives",
+      "experienceLevel": "Advanced Open Water (Or 15+ logged dives)",
+      "groupSize": "Exclusive Liveaboard Group",
+      "coverImage": "/media/maldives-liveaboard.jpg",
+      "galleryImages": [
+        "/media/maldives-liveaboard.jpg",
+        "/media/maafushi-maldives.jpg",
+        "/media/gallery-diver-anthias.jpg",
+        "/media/gallery-sharks-reef.jpg"
+      ],
+      "summary": "A signature ocean journey through world-famous Maldivian reefs and deep channels. Encounter whale sharks, eagle rays, and night dives with hunting nurse sharks in paradise.",
+      "overview": "Living aboard a dedicated safari yacht is the gold standard of scuba diving. Our February 2027 Maldives Expedition navigates the iconic Central Atolls route: North Malé, South Malé, Vaavu, and Ari Atolls. By moving with the currents, we dive the best thilas and kandus (ocean passes) at the optimal times of day. Wake up to sunrise over a new coral reef, step straight onto our dedicated dive dhoni, and encounter pelagic giants: whale sharks cruising along the reef edge, manta rays hovering at cleaning stations, and dramatic night dives surrounded by dozens of feeding nurse sharks.",
+      "highlights": [
+        "Dedicated search for gentle giant Whale Sharks in South Ari",
+        "Legendary Alimatha night dive surrounded by massive nurse sharks",
+        "World-class channel drift diving with reef sharks and eagle ray squadrons",
+        "Living aboard a spacious luxury safari yacht with chef-prepared meals",
+        "Up to 17 dives over 6 days including spectacular sunset & night dives",
+        "Nitrox available onboard for certified enriched air divers"
+      ],
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Embarkation on Luxury Safari Yacht",
+          "subtitle": "Airport Dhoni Pickup • Welcome Dinner",
+          "description": "Arrive at Velana International Airport (Malé). Step onto our private dive dhoni and cruise out to our luxury liveaboard safari vessel anchored in the lagoon. Meet your expedition leaders, captain, and dive crew. Checkout dive at a protected nearby reef followed by a sunset welcome dinner on the upper deck.",
+          "highlights": [
+            "Dhoni airport transfer",
+            "Cabin allocation & orientation",
+            "Welcome feast"
+          ]
+        },
+        {
+          "day": 2,
+          "title": "North Malé Channels & Lankan Manta Point",
+          "subtitle": "3 Dives • Manta Ray Cleaning Stations",
+          "description": "Wake up to early morning coffee as we set course for Lankan Manta Point. Watch majestic manta rays circle massive coral heads. Dive two and three take you to thrilling coral passes where grey reef sharks patrol against incoming oceanic currents.",
+          "highlights": [
+            "Manta ray cleaning station",
+            "Shark channel drifts",
+            "Upper sun-deck relaxation"
+          ]
+        },
+        {
+          "day": 3,
+          "title": "South Ari Whale Shark Quest",
+          "subtitle": "3 Dives • The Ocean's Gentle Giants",
+          "description": "Cruise south into Ari Atoll, world-famous for year-round whale shark sightings. Our crew keeps watch from the top deck. When a whale shark is spotted, slip into the azure water for an awe-inspiring snorkel and dive alongside the largest fish in the world.",
+          "highlights": [
+            "Whale shark encounters",
+            "Pristine Ari Atoll reefs",
+            "Underwater photography session"
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Maaya Thila & The Alimatha Night Frenzy",
+          "subtitle": "3 Dives + 1 Night Dive • Epic Shark Action",
+          "description": "Dive the renowned Maaya Thila marine sanctuary, packed with sleeping leopard sharks, morays, and turtles. As night falls, we drop onto Alimatha Jetty: an exhilarating night dive where dozens of 3-meter nurse sharks and giant stingrays swim right between your bubbles.",
+          "highlights": [
+            "Maaya Thila marine sanctuary",
+            "Alimatha nurse shark night dive",
+            "Adrenaline underwater action"
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Vaavu Atoll Golden Wall & Deserted Sandbank",
+          "subtitle": "3 Dives • Coral Overhangs & Beach BBQ",
+          "description": "Drift along Golden Wall, a vertical drop-off covered entirely in brilliant yellow soft corals. In the evening, the crew prepares a candlelit sandbank barbecue carved out of sand on a deserted island under the stars.",
+          "highlights": [
+            "Golden Wall soft corals",
+            "Deserted island barbecue",
+            "Starlight cocktails on sundeck"
+          ]
+        },
+        {
+          "day": 6,
+          "title": "Banana Reef & Sunset Cruise to Malé",
+          "subtitle": "2 Dives • Celebratory Night",
+          "description": "Final morning dives at Banana Reef — the first dive site discovered in the Maldives. Enjoy lunch as the yacht cruises back toward Malé harbor. Celebrate the week with an awards night and farewell banquet.",
+          "highlights": [
+            "Banana Reef exploration",
+            "Dive log ceremony",
+            "Farewell captain's party"
+          ]
+        },
+        {
+          "day": 7,
+          "title": "Disembarkation & Homeward Flights",
+          "subtitle": "Breakfast • Airport Transfer",
+          "description": "Breakfast on the sun deck, group photos, and transfer by dive dhoni back to Velana International Airport for your international departure flights.",
+          "highlights": [
+            "Airport drop-off",
+            "Photo exchange",
+            "Friendships forged for life"
+          ]
+        }
+      ],
+      "inclusions": [
+        "6 Nights twin-share cabin accommodation aboard luxury safari liveaboard",
+        "Up to 17 guided boat dives with experienced PADI Cruise Directors",
+        "All gourmet meals, afternoon snacks, tea, coffee & drinking water onboard",
+        "Dedicated dive dhoni equipped with compressor, oxygen & emergency kits",
+        "12L aluminum tanks, weights, belts & Nitrox for certified divers",
+        "Maldivian Green Tax, GST & marine park permits included",
+        "Purva Ocean Adventures expedition merchandise pack"
+      ],
+      "exclusions": [
+        "International flights to Malé (MLE)",
+        "Alcoholic drinks and soft canned beverages from the yacht bar",
+        "Full scuba equipment rental (available for pre-booking)",
+        "Mandatory dive travel insurance",
+        "Crew gratuity / tips (customary on liveaboards)"
+      ],
+      "requirements": [
+        "Minimum certification: PADI Advanced Open Water (or Open Water with 15+ logged dives)",
+        "Comfortable with drift diving and channel currents",
+        "Valid passport with at least 6 months validity"
+      ],
+      "pricing": {
+        "displayText": "Dates Announcing Soon",
+        "note": "Join the VIP waitlist to receive first-access booking and early-bird rates before public launch."
+      },
+      "available": false
+    }
+  ],
+  "courses": [
+    {
+      "slug": "open-water-diver",
+      "name": "Open Water Diver",
+      "tagline": "Your Lifetime Passport to Underwater Exploration",
+      "eyebrow": "PADI Worldwide Scuba Certification",
+      "certification": "PADI Open Water Diver (Lifetime International Certification)",
+      "duration": "3–4 Days (Flexible eLearning)",
+      "maxDepth": "18 Meters / 60 Feet",
+      "minimumAge": "10 Years (Junior) / 15 Years (Open Water)",
+      "prerequisites": "Basic swimming skills (200m swim & 10min tread), med clearance",
+      "coverImage": "/media/P2.jpg",
+      "galleryImages": [
+        "/media/P2.jpg",
+        "/media/clean-diver-backdrop.jpg",
+        "/media/gallery-diver-anthias.jpg"
+      ],
+      "summary": "Become a fully certified scuba diver with the world's most recognized and respected diving credential. Breathe underwater, explore vibrant coral reefs, and dive independently with a buddy anywhere across the globe.",
+      "overview": "The PADI Open Water Diver course is the world's most popular and widely recognized scuba qualification. Millions of people have learned to scuba dive through this course, embarking on a lifelong journey of ocean discovery. Under the direct guidance of certified Purva Ocean Adventures instructors, you will learn the essential principles and skills needed to explore the underwater realm safely and with complete confidence.",
+      "skillsLearned": [
+        "Breathing comfortably underwater & mastering neutral buoyancy control",
+        "Essential safety techniques: mask clearing, regulator recovery & out-of-air scenarios",
+        "Dive equipment assembly, pre-dive safety buddy checks & gear maintenance",
+        "Underwater navigation basics, dive computer reading & dive planning",
+        "Marine life appreciation and ocean conservation etiquette"
+      ],
+      "phases": [
+        {
+          "number": 1,
+          "title": "Knowledge Development (PADI eLearning)",
+          "description": "Learn the basic principles and safety concepts of scuba diving at your own pace from home or on the beach via your phone or tablet."
+        },
+        {
+          "number": 2,
+          "title": "Confined Water Dives (Pool Training)",
+          "description": "Practice essential scuba skills in a calm pool or pool-like environment until you feel completely natural and relaxed underwater."
+        },
+        {
+          "number": 3,
+          "title": "Open Water Dives (4 Ocean Dives)",
+          "description": "Put your skills into practice on real coral reefs! Experience 4 boat or shore ocean dives exploring stunning marine life with your instructor."
+        }
+      ],
+      "inclusions": [
+        "PADI Official Digital eLearning Materials & Lifetime Certification Card",
+        "Full Scuba Gear Rental (BCD, regulator, wetsuit, mask, snorkel, fins & weights)",
+        "Dedicated Certified PADI Instructor (small student-to-instructor ratio)",
+        "Logbook & Digital Certification Processing Fees",
+        "Marine Sanctuary & Boat Access Fees"
+      ],
+      "requirements": [
+        "Minimum age 10 years old",
+        "Ability to swim 200 meters continuously without aids",
+        "Ability to float / tread water for 10 minutes",
+        "Completed PADI Medical Questionnaire (doctor sign-off if required)"
+      ],
+      "pricing": {
+        "displayText": "Comprehensive All-Inclusive Package",
+        "note": "Includes gear, boat dives, certification fees & e-Learning"
+      },
+      "cardTheme": {
+        "pillBg": "bg-[#EEF5FD]",
+        "pillTextColor": "text-[#031B33]",
+        "pillHex": "#EEF5FD"
+      }
+    },
+    {
+      "slug": "advanced-open-water-diver",
+      "name": "Advanced Open Water Diver",
+      "tagline": "Expand Your Limits, Deepen Your Skills & Adventure Further",
+      "eyebrow": "PADI Advanced Exploration Certification",
+      "certification": "PADI Advanced Open Water Diver (Up to 30 Meters / 100 Feet)",
+      "duration": "2–3 Days (5 Adventure Ocean Dives)",
+      "maxDepth": "30 Meters / 100 Feet",
+      "minimumAge": "12 Years (Junior Advanced) / 15 Years (Advanced)",
+      "prerequisites": "PADI Open Water Diver (or qualifying certification from another agency)",
+      "coverImage": "/media/P1.jpg",
+      "galleryImages": [
+        "/media/P1.jpg",
+        "/media/clean-diver-backdrop.jpg",
+        "/media/gallery-diver-selfie.jpg"
+      ],
+      "summary": "Take your diving skills to the next level. Complete 5 specialized Adventure Dives, including Deep Diving (down to 30m) and Underwater Navigation, plus exciting electives like Drift, Wreck, and Night diving.",
+      "overview": "The Advanced Open Water Diver course isn't about being 'expert'—it's designed to advance your diving skills right after your Open Water course. You'll build confidence and expand your scuba capabilities through 5 distinct Adventure Dives. You'll try different specialties under the supervision of your Purva Ocean Adventures instructor, gaining valuable experience, discovering new dive activities, and opening up world-famous deep reef and wreck dive sites worldwide.",
+      "skillsLearned": [
+        "Deep diving techniques, gas management & dealing with physiological effects down to 30m",
+        "Precision underwater compass navigation, kick-cycle pacing & natural topography tracking",
+        "Peak Performance Buoyancy: streamlining, effortless trim & reduced air consumption",
+        "Choice of 3 Adventure electives: Drift diving, Wreck diving, Night diving, Fish ID or Photography",
+        "Handling unexpected currents, safety stop deployments & delayed surface marker buoys (DSMB)"
+      ],
+      "phases": [
+        {
+          "number": 1,
+          "title": "Deep Adventure Dive (Required)",
+          "description": "Descend safely past 18 meters down to 30 meters. Experience the deep marine environment, color changes, and buoyancy adjustments."
+        },
+        {
+          "number": 2,
+          "title": "Underwater Navigation Dive (Required)",
+          "description": "Master compass navigation, kick-cycles, and natural landmarks to effortlessly find your way back to the boat or exit point."
+        },
+        {
+          "number": 3,
+          "title": "3 Adventure Elective Dives",
+          "description": "Customize your training: soar with ocean currents on a Drift dive, explore historic shipwrecks, or witness nocturnal critters on a Night dive."
+        }
+      ],
+      "inclusions": [
+        "PADI Advanced Open Water Digital eLearning Materials",
+        "5 Guided Adventure Ocean Boat Dives with Certified Instructor",
+        "Specialty Equipment Rentals (Compass, dive computer, underwater lights, DSMB)",
+        "PADI Advanced Certification Card (qualifies you to 30m worldwide)",
+        "Small Group Guarantee (Maximum 4 divers per instructor)"
+      ],
+      "requirements": [
+        "PADI Open Water Diver certification (or equivalent from another training agency)",
+        "Minimum age 12 years old",
+        "Completed PADI Medical Questionnaire"
+      ],
+      "pricing": {
+        "displayText": "5 Adventure Dives & Full Certification",
+        "note": "Includes all specialty gear, boat excursions & digital materials"
+      },
+      "cardTheme": {
+        "pillBg": "bg-[#4DA4F3]",
+        "pillTextColor": "text-white",
+        "pillHex": "#4DA4F3"
+      }
+    },
+    {
+      "slug": "specialty-diver",
+      "name": "Specialty Diver Certifications",
+      "tagline": "Master Niche Disciplines: Nitrox, Deep 40m, Wrecks & Photography",
+      "eyebrow": "PADI Master Specialty Training",
+      "certification": "PADI Specialty Diver Certification Cards",
+      "duration": "1–2 Days per Specialty",
+      "maxDepth": "Up to 40 Meters / 130 Feet (Deep Diver)",
+      "minimumAge": "12–15 Years (depending on chosen specialty)",
+      "prerequisites": "PADI Open Water or Advanced Open Water Diver",
+      "coverImage": "/media/P3.jpg",
+      "galleryImages": [
+        "/media/P3.jpg",
+        "/media/clean-diver-backdrop.jpg",
+        "/media/gallery-reef-panorama.jpg"
+      ],
+      "summary": "Specialize in what fascinates you most. From Enriched Air Nitrox (stay underwater longer) to Deep Diver (40m limit), Wreck Diver, and Underwater Photography—hone your skills with master-level credentials.",
+      "overview": "Whether you want to spend more time exploring pristine reefs using Enriched Air Nitrox, explore sunken historic shipwrecks safely, or reach the recreational limit of 40 meters, PADI Specialty Courses give you dedicated, in-depth expertise. Taught by seasoned Purva Ocean Adventures specialists, these courses empower you with specialized equipment mastery, emergency protocols, and elite underwater awareness.",
+      "skillsLearned": [
+        "Enriched Air Nitrox (EANx): analyze oxygen mixtures (up to 40% O2) & safely extend no-decompression limits",
+        "Deep Diver: plan, manage air consumption & dive safely down to 40 meters / 130 feet",
+        "Wreck Diver: navigate shipwreck exteriors, mapping, hazard avoidance & penetration line protocols",
+        "Underwater Photography: composition, manual strobe lighting & capturing crisp marine life shots",
+        "Emergency Oxygen Provider & Surface Marker Buoy (DSMB) specialty techniques"
+      ],
+      "phases": [
+        {
+          "number": 1,
+          "title": "Specialty Theory & Gas Analysis",
+          "description": "Study specialty-specific physics, gas blending calculations, emergency procedures, and equipment setups."
+        },
+        {
+          "number": 2,
+          "title": "Hands-on Workshop & Pre-dive Planning",
+          "description": "Calibrate oxygen analyzers, rig reels and lines, adjust strobe angles, or configure redundant deep breathing systems."
+        },
+        {
+          "number": 3,
+          "title": "Specialty Ocean Execution Dives",
+          "description": "Execute 2 to 4 dedicated ocean boat dives applying your specialty techniques under live sea conditions."
+        }
+      ],
+      "inclusions": [
+        "PADI Specialty eLearning Materials & Lifetime Brevet Certification",
+        "Dedicated Specialty Equipment (Oxygen analyzers, deep dive computers, reels, lights)",
+        "High-Nitrox Gas Fills & Double Cylinders where applicable",
+        "Boat Charters to specialized deep/wreck dive sites",
+        "PADI Specialty Instructor Mentorship & Personalized Skill Coaching"
+      ],
+      "requirements": [
+        "PADI Open Water or Advanced Open Water Diver (depending on specialty)",
+        "Completed PADI Medical Questionnaire"
+      ],
+      "pricing": {
+        "displayText": "Custom Specialty Packages Available",
+        "note": "Choose Nitrox, Deep 40m, Wreck, or Multi-Specialty Combos"
+      },
+      "cardTheme": {
+        "pillBg": "bg-[#095BB1]",
+        "pillTextColor": "text-white",
+        "pillHex": "#095BB1"
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "id": "whale-shark-diver",
+      "title": "Whale Shark & Diver Descent",
+      "category": "UNDERWATER",
+      "categoryLabel": "Underwater",
+      "src": "/media/P4.jpg",
+      "alt": "Scuba diver swimming alongside a magnificent whale shark in deep blue ocean water",
+      "location": "South Ari Atoll, Maldives",
+      "description": "Descending through crystal-clear pelagic blue alongside the world's largest fish — a serene, humbling encounter.",
+      "aspect": "portrait"
+    },
+    {
+      "id": "reef-shark-sunbeams",
+      "title": "Grey Reef Shark in Sunbeams",
+      "category": "MARINE LIFE",
+      "categoryLabel": "Marine Life",
+      "src": "/media/gallery-shark-highres.jpg",
+      "alt": "Grey reef shark swimming gracefully through shimmering sun rays",
+      "location": "Rasdhoo Atoll, Maldives",
+      "description": "Sunlight cascades through the outer channel as an apex predator patrols the deep drop-off with effortless grace.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "turtle-deep-ocean",
+      "title": "Hawksbill Turtle Gliding Downward",
+      "category": "MARINE LIFE",
+      "categoryLabel": "Marine Life",
+      "src": "/media/gallery-turtle-deep.jpg",
+      "alt": "Hawksbill sea turtle swimming downwards into the deep indigo ocean",
+      "location": "Baa Atoll Biosphere, Maldives",
+      "description": "A sea turtle descending towards deep sea pastures, silhouetted against ambient ocean light.",
+      "aspect": "portrait"
+    },
+    {
+      "id": "turtle-surface-reflection",
+      "title": "Green Turtle Surface Reflection",
+      "category": "EXPEDITIONS",
+      "categoryLabel": "Expeditions",
+      "src": "/media/gallery-turtle-surface.jpg",
+      "alt": "Sea turtle taking a breath at the glassy surface with clear mirrored reflection",
+      "location": "Kadmat Island, Lakshadweep",
+      "description": "Breaching the glassy surface for air, creating mirror-like reflections against turquoise coastal waters.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "turtle-coral-sanctuary",
+      "title": "Hawksbill Coral Reef Sanctuary",
+      "category": "MARINE LIFE",
+      "categoryLabel": "Marine Life",
+      "src": "/media/gallery-turtle-deep.jpg",
+      "alt": "Hawksbill sea turtle grazing on coral reef pinnacle",
+      "location": "Ari Atoll, Maldives",
+      "description": "Resting peacefully atop a vibrant coral pinnacle thriving with tropical fish.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "bait-ball-convergence",
+      "title": "Silvery Bait Ball Vortex",
+      "category": "UNDERWATER",
+      "categoryLabel": "Underwater",
+      "src": "/media/gallery-diver-fish.jpg",
+      "alt": "Enormous school of silver baitfish swirling like liquid silver",
+      "location": "Vaavu Atoll, Maldives",
+      "description": "A living spectacle of hundreds of thousands of baitfish shimmering in unison to avoid pelagic predators.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "diver-fish-school",
+      "title": "Diver in Schooling Fish",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/gallery-diver-fish.jpg",
+      "alt": "Scuba diver suspended weightlessly above coral reef enveloped by schooling fish",
+      "location": "Thulusdhoo Corner, Maldives",
+      "description": "Total immersion in the marine ecosystem — floating serenely while fish swirl around in harmony.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "eagle-ray-ascent",
+      "title": "Spotted Eagle Ray Ascent",
+      "category": "MARINE LIFE",
+      "categoryLabel": "Marine Life",
+      "src": "/media/gallery-card-3-tall.jpg",
+      "alt": "Spotted eagle ray gliding upward through open blue ocean with schooling fish below",
+      "location": "Alimatha Thila, Maldives",
+      "description": "Spotted eagle rays glide with majestic wingbeats across oceanic channels.",
+      "aspect": "portrait"
+    },
+    {
+      "id": "anthias-coral-garden",
+      "title": "Golden Anthias Coral Garden",
+      "category": "CORALS",
+      "categoryLabel": "Corals",
+      "src": "/media/gallery-diver-anthias.jpg",
+      "alt": "Sunlit table coral gardens teeming with orange anthias fish",
+      "location": "Bangaram Reef, Lakshadweep",
+      "description": "Vibrant marine biodiversity in shallow reefs where sunbeams fuel thriving coral life.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "anthias-reef-wall",
+      "title": "Anthias Clouds along Reef Wall",
+      "category": "CORALS",
+      "categoryLabel": "Corals",
+      "src": "/media/gallery-diver-anthias.jpg",
+      "alt": "Diver navigating vibrant orange anthias fish along deep coral wall",
+      "location": "Ras Mohammed, Red Sea",
+      "description": "A steep oceanic drop-off wrapped in clouds of fluttering orange and gold fish.",
+      "aspect": "square"
+    },
+    {
+      "id": "reef-exploration-descent",
+      "title": "Reef Exploration Descent",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/clean-diver-backdrop.jpg",
+      "alt": "Scuba diver in full gear gliding over sandy channel and vibrant coral pinnacle",
+      "location": "North Malé Atoll, Maldives",
+      "description": "Navigating deep coral gullies and sandy swim-throughs in calm tropical waters.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "diver-vessel-ascent",
+      "title": "Diver Ascent to Liveaboard Vessel",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/gallery-diver-ladder.jpg",
+      "alt": "Scuba diver climbing up boat ladder after thrilling deep dive",
+      "location": "Maldives Liveaboard",
+      "description": "The thrill of completing a deep drift dive and climbing back aboard with smiling faces and great stories.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "diver-sun-rays",
+      "title": "Weightless in the Sunbeams",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/clean-diver-backdrop.jpg",
+      "alt": "Diver floating calmly through vertical sun rays in azure ocean water",
+      "location": "Agatti Island, Lakshadweep",
+      "description": "Sunlight piercing through thirty meters of clear ocean water as a diver floats in complete peace.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "ancient-brain-coral",
+      "title": "Ancient Brain Coral Formation",
+      "category": "CORALS",
+      "categoryLabel": "Corals",
+      "src": "/media/gallery-coral-formation.jpg",
+      "alt": "Pristine hard coral garden and massive centuries-old brain coral formations",
+      "location": "Havelock Island, Andamans",
+      "description": "Towering coral colonies that have grown for centuries, providing shelter to thousands of reef creatures.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "outer-atoll-pinnacle",
+      "title": "Outer Atoll Expedition Pinnacle",
+      "category": "EXPEDITIONS",
+      "categoryLabel": "Expeditions",
+      "src": "/media/gallery-reef-panorama.jpg",
+      "alt": "Expedition divers along deep oceanic pinnacle",
+      "location": "Baa Atoll Biosphere Reserve",
+      "description": "Small-group expeditions venturing to untouched submerged pinnacles far from the mainland.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "diver-selfie-calm",
+      "title": "Diver Ready for Descent",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/gallery-diver-selfie.jpg",
+      "alt": "Scuba diver with full regulator and mask exploring clear waters",
+      "location": "Neil Island, Andamans",
+      "description": "Checking gauges, adjusting masks, and giving the OK sign before descending into the blue.",
+      "aspect": "square"
+    },
+    {
+      "id": "maldives-liveaboard-safari",
+      "title": "Maldives Liveaboard Safari",
+      "category": "EXPEDITIONS",
+      "categoryLabel": "Expeditions",
+      "src": "/media/maldives-liveaboard.jpg",
+      "alt": "Luxury dive liveaboard cruising through calm turquoise atoll waters",
+      "location": "Central Atolls, Maldives",
+      "description": "Waking up right over world-class dive sites, diving up to four times daily in tropical comfort.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "lakshadweep-coral-paradise",
+      "title": "Lakshadweep Coral Paradise",
+      "category": "EXPEDITIONS",
+      "categoryLabel": "Expeditions",
+      "src": "/media/lakshadweep-love.jpg",
+      "alt": "Crystal clear shallow lagoon and fringing reef in Lakshadweep",
+      "location": "Bangaram & Kavaratti, Lakshadweep",
+      "description": "Pristine turquoise lagoons and untouched coral gardens in India's premier archipelago.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "open-water-training",
+      "title": "PADI Open Water Certification",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/P2.jpg",
+      "alt": "Diver exploring underwater pinnacle during Open Water course",
+      "location": "Maldives Training Reef",
+      "description": "Mastering fundamental buoyancy, navigation, and marine observation skills in crystal waters.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "advanced-open-water",
+      "title": "Advanced Open Water Adventure",
+      "category": "DIVERS",
+      "categoryLabel": "Divers",
+      "src": "/media/P1.jpg",
+      "alt": "Deep drift dive training with certified PADI master instructor",
+      "location": "Ari Atoll Outer Channel",
+      "description": "Expanding dive limits to thirty meters, exploring shipwrecks, and navigating deep currents.",
+      "aspect": "landscape"
+    },
+    {
+      "id": "specialty-nitrox-deep",
+      "title": "Specialty Deep & Nitrox Journey",
+      "category": "EXPEDITIONS",
+      "categoryLabel": "Expeditions",
+      "src": "/media/P3.jpg",
+      "alt": "Specialty technical and deep diver exploring underwater pinnacle",
+      "location": "Vaavu Biosphere Reserve",
+      "description": "Advanced diving techniques for longer bottom times and deeper pelagic observation.",
+      "aspect": "landscape"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-1",
+      "question": "Do I need to know how to swim to go scuba diving?",
+      "answer": "For PADI Open Water certification, you need to meet basic swimming and floating requirements. However, certain supervised introductory scuba experiences may be available for non-swimmers, depending on the dive centre and programme.",
+      "icon": "mask"
+    },
+    {
+      "id": "faq-2",
+      "question": "Can I join a dive trip without being certified?",
+      "answer": "Absolutely! Our expeditions welcome both beginners and certified divers, depending on the trip. You can begin your scuba journey with a PADI Open Water course or join us for recreational dives if you're already certified.",
+      "icon": "shield"
+    },
+    {
+      "id": "faq-3",
+      "question": "Is scuba diving safe for beginners?",
+      "answer": "Scuba diving is an adventure that requires proper training and safety precautions. We work with qualified dive professionals and prioritise appropriate equipment, safety procedures, and personalised guidance throughout your experience.",
+      "icon": "safety"
+    },
+    {
+      "id": "faq-4",
+      "question": "What if I'm nervous about diving underwater?",
+      "answer": "That's completely normal! Many divers feel nervous before their first dive. Your instructor will guide you through the equipment, breathing techniques, and essential skills, allowing you to progress at a comfortable pace.",
+      "icon": "wave"
+    },
+    {
+      "id": "faq-5",
+      "question": "What is the difference between Open Water and Advanced Open Water certification?",
+      "answer": "PADI Open Water Diver is your first certification, teaching you essential diving skills and qualifying eligible adults to dive up to 18 metres. PADI Advanced Open Water Diver builds your confidence and experience through different adventure dives, including deeper diving, with a maximum training depth of 30 metres for eligible adults.",
+      "icon": "award"
+    },
+    {
+      "id": "faq-6",
+      "question": "Will I get to see sharks, manta rays, or turtles?",
+      "answer": "The ocean is full of surprises! Depending on the destination and diving conditions, you may encounter reef sharks, manta rays, turtles, colourful fish, and incredible coral reefs. Wildlife encounters are never guaranteed, but that's part of what makes every dive special.",
+      "icon": "fish"
+    },
+    {
+      "id": "faq-7",
+      "question": "Can I join as a solo traveller?",
+      "answer": "Of course! Some of the best ocean friendships begin with strangers. Our small-group expeditions are designed to bring together solo travellers, couples, friends, and ocean lovers who share a passion for adventure. Come solo, leave with stories and new friendships.",
+      "icon": "users"
+    },
+    {
+      "id": "faq-8",
+      "question": "How many people are there in each expedition?",
+      "answer": "We believe in quality experiences over large crowds. Our current Maafushi, Maldives expedition is limited to a maximum of 10 participants, allowing for a more personal, comfortable, and connected group experience.",
+      "icon": "group"
+    },
+    {
+      "id": "faq-9",
+      "question": "Is scuba diving equipment included in the package?",
+      "answer": "Yes! Our current Maldives diving packages include essential equipment such as a BCD, regulator, mask, fins, wetsuit, tanks, and weights. Certain additional equipment, including dive computers, may be available at an extra rental cost. Exact inclusions are mentioned in each expedition brochure.",
+      "icon": "gear"
+    },
+    {
+      "id": "faq-10",
+      "question": "Do I need scuba diving insurance?",
+      "answer": "Yes. Appropriate scuba diving insurance is mandatory for our current Maldives expedition. We recommend choosing coverage that includes diving-related medical emergencies and evacuation, appropriate to your planned diving activities.",
+      "icon": "medical"
+    },
+    {
+      "id": "faq-11",
+      "question": "How long should I wait before flying after scuba diving?",
+      "answer": "For recreational no-decompression diving, common guidance recommends waiting at least 12 hours after a single dive and at least 18 hours after multiple dives or multiple days of diving. Longer intervals may be advisable depending on your dive profile. Our itineraries are planned with appropriate time between the final dive and departure.",
+      "icon": "plane"
+    },
+    {
+      "id": "faq-12",
+      "question": "How can I book an expedition with Purva Ocean Adventures?",
+      "answer": "It's simple! Explore our upcoming expeditions, choose the experience that suits you, and reach out through WhatsApp or our website enquiry form. We'll guide you through package details, availability, booking requirements, and everything you need to prepare for your ocean adventure.",
+      "icon": "card"
+    }
+  ],
+  "about": {
+    "eyebrow": "ABOUT OUR FOUNDATION",
+    "title": "Born From a Passion for the Ocean",
+    "subtitle": "Connecting ocean lovers, conscious travelers, and underwater explorers with world-class expeditions.",
+    "storyHeading": "Who We Are",
+    "storyParagraphs": [
+      "Purva Ocean Adventures was born out of deep respect and fascination for the open sea. We curate life-changing scuba diving expeditions to the world's most spectacular and remote marine environments.",
+      "Whether you're taking your very first breath underwater or are a seasoned technical diver drifting through Maldivian channels, we provide safe, intimate, and unforgettable adventures."
+    ],
+    "stats": [
+      {
+        "label": "CERTIFIED DIVERS",
+        "value": "500+"
+      },
+      {
+        "label": "EXPEDITIONS COMPLETED",
+        "value": "24+"
+      },
+      {
+        "label": "SAFETY RECORD",
+        "value": "100%"
+      },
+      {
+        "label": "OCEAN CONSERVATION",
+        "value": "100%"
+      }
+    ],
+    "founder": {
+      "name": "Dr. Purva",
+      "role": "Founder & Expedition Leader",
+      "bio": "Doctor, PADI Divemaster, and dedicated ocean conservation advocate guiding divers into the world's most pristine waters.",
+      "image": "/media/P4.jpg",
+      "instagramUrl": "https://www.instagram.com/dr.purvaa?obrf=bjBncnJpcXgxZW03"
+    }
+  },
+  "instagram": {
+    "handleUrl": "https://www.instagram.com/purvaoceanadventures?vrfl=cTZjNmw4ZncwdHB0",
+    "founderHandleUrl": "https://www.instagram.com/dr.purvaa?obrf=bjBncnJpcXgxZW03",
+    "reels": [
+      {
+        "id": "reel-1",
+        "title": "Underwater Euphoria",
+        "url": "https://www.instagram.com/reel/DeuMANFKgi7/?rpxt=cTVieWg1b2R4dDEy",
+        "thumbnail": "/media/P4.jpg",
+        "caption": "Whale shark encounters in the deep blue"
+      },
+      {
+        "id": "reel-2",
+        "title": "Channel Drifts",
+        "url": "https://www.instagram.com/reel/DesAMH2KMZN/?obrf=MTFrcjVrdWhoOXFk",
+        "thumbnail": "/media/gallery-shark-highres.jpg",
+        "caption": "Gliding with reef sharks in Maafushi"
+      },
+      {
+        "id": "reel-3",
+        "title": "Manta Magic",
+        "url": "https://www.instagram.com/reel/Demuzw9qD9P/?psln=cDNuODhwd3NpZXJo",
+        "thumbnail": "/media/gallery-turtle-deep.jpg",
+        "caption": "Manta rays soaring over cleaning stations"
+      },
+      {
+        "id": "reel-4",
+        "title": "Turtle Lagoons",
+        "url": "https://www.instagram.com/reel/DeXHOHetfiC/?xtok=MTZ4b3plM2puZGR0aA==",
+        "thumbnail": "/media/gallery-card-3-tall.jpg",
+        "caption": "Gentle green sea turtle surface breath"
+      },
+      {
+        "id": "reel-5",
+        "title": "PADI Certifications",
+        "url": "https://www.instagram.com/reel/DeUXK8QNXsX/?srtk=MWR5azd1Z3JkZWNjOQ==",
+        "thumbnail": "/media/gallery-diver-anthias.jpg",
+        "caption": "First breath underwater in calm lagoons"
+      },
+      {
+        "id": "reel-6",
+        "title": "Island Life & Sunsets",
+        "url": "https://www.instagram.com/reel/DeR9_69KvNJ/?exln=MTJ2bmJ4OHoyZjA5Yw==",
+        "thumbnail": "/media/gallery-diver-fish.jpg",
+        "caption": "Pure ocean community and island memories"
+      }
+    ]
+  },
+  "settings": {
+    "websiteName": "Purva Ocean Adventures",
+    "whatsappNumber": "+91 62623 23232",
+    "whatsappUrl": "https://wa.me/916262323232",
+    "email": "purvaoceanadventures@gmail.com",
+    "announcement": {
+      "enabled": false,
+      "message": "Limited spots remaining for Maafushi Maldives expedition. Book now!",
+      "linkUrl": "/#upcoming-trips"
+    },
+    "googleSpreadsheetId": "11wp3Db18dN-GTEfhRnDGBYEUZdHIt9j7_Culgn3-OQ0",
+    "googleSpreadsheetUrl": "https://docs.google.com/spreadsheets/d/11wp3Db18dN-GTEfhRnDGBYEUZdHIt9j7_Culgn3-OQ0/edit"
+  }
+}
