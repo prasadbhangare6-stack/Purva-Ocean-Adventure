@@ -10,20 +10,26 @@ export const metadata: Metadata = {
 
 export default function TripsPage() {
   const store = getSiteContentStore();
-  const initialTrips: UpcomingTripItem[] = store.trips.map((t) => ({
-    id: t.slug,
-    name: t.name,
-    destination: t.destination,
-    dates: t.dates,
-    meta: `${t.duration} | ${t.dives}`,
-    description: t.summary || t.overview,
-    image: t.coverImage,
-    tag: t.available ? "Upcoming Trip" : "Waitlist Only",
-    highlights: t.highlights || [],
-    slug: t.slug,
-    available: t.available,
-    priceEstimate: t.pricing?.displayText || "Available on request",
-  }));
+  const initialTrips: UpcomingTripItem[] = store.trips.map((t) => {
+    const spots = typeof t.remainingSpots === "number" ? t.remainingSpots : undefined;
+    return {
+      id: t.slug,
+      name: t.name,
+      destination: t.destination,
+      dates: t.dates,
+      meta: `${t.duration} | ${t.dives}`,
+      description: t.summary || t.overview,
+      image: t.coverImage,
+      tag: spots !== undefined
+        ? (spots > 0 ? `${spots} spots left` : "Waitlist Only")
+        : (t.available ? "Upcoming Trip" : "Waitlist Only"),
+      highlights: t.highlights || [],
+      slug: t.slug,
+      available: t.available,
+      priceEstimate: t.pricing?.displayText || "Available on request",
+      remainingSpots: spots,
+    };
+  });
 
   return <UpcomingTripsShowcase initialTrips={initialTrips} />;
 }

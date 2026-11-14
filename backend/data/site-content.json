@@ -121,7 +121,8 @@
         "displayText": "₹89,999 / $1,080 per diver",
         "note": "Early bird pricing valid until slots fill. Double occupancy. Solo supplement available."
       },
-      "available": true
+      "available": true,
+      "remainingSpots": 10
     },
     {
       "slug": "lakshadweep-love",
@@ -243,7 +244,8 @@
         "displayText": "₹74,999 per diver",
         "note": "Permits strictly limited per departure. Bookings close 30 days prior to departure."
       },
-      "available": true
+      "available": true,
+      "remainingSpots": 8
     },
     {
       "slug": "maldives-dive-expedition",
@@ -376,7 +378,8 @@
         "displayText": "Dates Announcing Soon",
         "note": "Join the VIP waitlist to receive first-access booking and early-bird rates before public launch."
       },
-      "available": false
+      "available": false,
+      "remainingSpots": 12
     }
   ],
   "courses": [

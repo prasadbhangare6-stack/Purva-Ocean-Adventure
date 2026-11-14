@@ -47,12 +47,17 @@ export async function POST(request: Request) {
           const slugToDelete = data.slug;
           store.trips = store.trips.filter((t) => t.slug !== slugToDelete);
         } else {
-          // create or update
+          // create or update with sanitized remainingSpots
+          const cleanTripData = { ...data };
+          if (cleanTripData.remainingSpots !== undefined) {
+            const parsed = parseInt(String(cleanTripData.remainingSpots), 10);
+            cleanTripData.remainingSpots = isNaN(parsed) ? 0 : Math.max(0, parsed);
+          }
           const index = store.trips.findIndex((t) => t.slug === data.slug);
           if (index >= 0) {
-            store.trips[index] = { ...store.trips[index], ...data };
+            store.trips[index] = { ...store.trips[index], ...cleanTripData };
           } else {
-            store.trips.push(data as unknown as (typeof store.trips)[number]);
+            store.trips.push(cleanTripData as unknown as (typeof store.trips)[number]);
           }
         }
         break;
@@ -128,6 +133,7 @@ export async function POST(request: Request) {
     try {
       revalidatePath("/", "layout");
       revalidatePath("/trips");
+      revalidatePath("/trips", "layout");
       revalidatePath("/courses");
       revalidatePath("/gallery");
       revalidatePath("/faq");

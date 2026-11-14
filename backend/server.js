@@ -141,9 +141,14 @@ app.post("/api/content", (req, res) => {
       if (action === "delete") {
         store.trips = store.trips.filter((t) => t.slug !== data.slug);
       } else {
+        const cleanTripData = { ...data };
+        if (cleanTripData.remainingSpots !== undefined) {
+          const parsed = parseInt(String(cleanTripData.remainingSpots), 10);
+          cleanTripData.remainingSpots = isNaN(parsed) ? 0 : Math.max(0, parsed);
+        }
         const idx = store.trips.findIndex((t) => t.slug === data.slug);
-        if (idx >= 0) store.trips[idx] = { ...store.trips[idx], ...data };
-        else store.trips.push(data);
+        if (idx >= 0) store.trips[idx] = { ...store.trips[idx], ...cleanTripData };
+        else store.trips.push(cleanTripData);
       }
       break;
     }

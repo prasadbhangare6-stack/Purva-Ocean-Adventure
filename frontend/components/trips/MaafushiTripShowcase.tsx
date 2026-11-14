@@ -505,7 +505,12 @@ export function MaafushiTripShowcase({
               <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90">
                 {cfg.eyebrow}
               </span>
-              <span className="h-[1px] w-24 bg-white/45" />
+              <span className="h-[1px] w-16 bg-white/45" />
+              {trip.remainingSpots !== undefined && (
+                <span className="rounded-full bg-[#E8C58F]/20 border border-[#E8C58F]/40 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F3E2C7]">
+                  {trip.remainingSpots > 0 ? `${trip.remainingSpots} spots left` : "Waitlist Only"}
+                </span>
+              )}
             </div>
 
             <h1 className="mt-4 font-serif text-[44px] font-normal leading-[1.02] tracking-[-0.01em] text-white sm:text-[56px] lg:text-[64px]">
@@ -519,15 +524,30 @@ export function MaafushiTripShowcase({
 
             {/* Quick Facts Row */}
             <div className="mt-7 grid max-w-[490px] grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-3">
-              {cfg.facts.map((fact) => (
-                <div key={fact.top + fact.bottom} className="flex items-center gap-2.5 text-white">
-                  <FactIcon type={fact.icon} />
-                  <span className="font-sans text-[12px] leading-tight">
-                    <span className="block font-semibold">{fact.top}</span>
-                    <span className="text-white/80">{fact.bottom}</span>
-                  </span>
-                </div>
-              ))}
+              {cfg.facts.map((fact) => {
+                const isUsersFact = fact.icon === "users";
+                const displayTop =
+                  isUsersFact && trip.remainingSpots !== undefined
+                    ? trip.remainingSpots === 0
+                      ? "Waitlist"
+                      : "Only"
+                    : fact.top;
+                const displayBottom =
+                  isUsersFact && trip.remainingSpots !== undefined
+                    ? trip.remainingSpots === 0
+                      ? "Sold Out"
+                      : `${trip.remainingSpots} Spots`
+                    : fact.bottom;
+                return (
+                  <div key={fact.top + fact.bottom} className="flex items-center gap-2.5 text-white">
+                    <FactIcon type={fact.icon} />
+                    <span className="font-sans text-[12px] leading-tight">
+                      <span className="block font-semibold">{displayTop}</span>
+                      <span className="text-white/80">{displayBottom}</span>
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Brochure + Price Request Button */}

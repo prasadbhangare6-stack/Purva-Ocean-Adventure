@@ -11,10 +11,75 @@ export function TripsManager({ initialTrips }: { initialTrips: CuratedTrip[] }) 
   const [editingTrip, setEditingTrip] = useState<CuratedTrip | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savingSpotsSlug, setSavingSpotsSlug] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // Tracks input values for the quick remaining spots editors on each trip card
+  const [cardSpots, setCardSpots] = useState<Record<string, number>>(() => {
+    const init: Record<string, number> = {};
+    initialTrips.forEach((t) => {
+      init[t.slug] = t.remainingSpots ?? 10;
+    });
+    return init;
+  });
+
+  const handleSpotChange = (slug: string, value: string) => {
+    const parsed = parseInt(value, 10);
+    setCardSpots((prev) => ({
+      ...prev,
+      [slug]: isNaN(parsed) ? 0 : Math.max(0, parsed),
+    }));
+  };
+
+  const handleQuickSaveSpots = async (trip: CuratedTrip) => {
+    const spots = cardSpots[trip.slug] ?? trip.remainingSpots ?? 10;
+    if (spots < 0) {
+      setFeedback({ type: "error", text: "Remaining spots cannot be negative." });
+      return;
+    }
+
+    setSavingSpotsSlug(trip.slug);
+    setFeedback(null);
+
+    const updatedTrip: CuratedTrip = {
+      ...trip,
+      remainingSpots: spots,
+    };
+
+    try {
+      const res = await fetch("/api/admin/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          resource: "trips",
+          action: "update",
+          data: updatedTrip,
+        }),
+      });
+
+      const json = await res.json();
+      if (res.ok) {
+        setTrips((prev) => prev.map((t) => (t.slug === trip.slug ? updatedTrip : t)));
+        setFeedback({
+          type: "success",
+          text: `Updated "${trip.name}" to ${spots} remaining spots! Public website is now synchronized.`,
+        });
+        setTimeout(() => setFeedback(null), 4000);
+      } else {
+        setFeedback({ type: "error", text: json.message || "Failed to update remaining spots." });
+      }
+    } catch {
+      setFeedback({ type: "error", text: "Network error saving remaining spots." });
+    } finally {
+      setSavingSpotsSlug(null);
+    }
+  };
+
   const handleEdit = (trip: CuratedTrip) => {
-    setEditingTrip({ ...trip });
+    setEditingTrip({
+      ...trip,
+      remainingSpots: cardSpots[trip.slug] ?? trip.remainingSpots ?? 10,
+    });
     setIsCreating(false);
   };
 
@@ -29,6 +94,7 @@ export function TripsManager({ initialTrips }: { initialTrips: CuratedTrip[] }) 
       dives: "10 Guided Dives",
       experienceLevel: "Open Water Diver & Above",
       groupSize: "Small Group (Max 10 Divers)",
+      remainingSpots: 10,
       coverImage: "/media/maafushi-maldives.jpg",
       galleryImages: ["/media/maafushi-maldives.jpg"],
       summary: "Experience pristine reef dives and rich marine encounters.",
@@ -79,6 +145,12 @@ export function TripsManager({ initialTrips }: { initialTrips: CuratedTrip[] }) 
           setTrips([...trips, editingTrip]);
         } else {
           setTrips(trips.map((t) => (t.slug === editingTrip.slug ? editingTrip : t)));
+        }
+        if (editingTrip.remainingSpots !== undefined) {
+          setCardSpots((prev) => ({
+            ...prev,
+            [editingTrip.slug]: editingTrip.remainingSpots ?? 10,
+          }));
         }
         setEditingTrip(null);
         setIsCreating(false);
@@ -213,8 +285,51 @@ export function TripsManager({ initialTrips }: { initialTrips: CuratedTrip[] }) 
                 </div>
               </div>
 
+              {/* Remaining Spots Quick Manager */}
+              <div className="mt-4 pt-3.5 border-t border-slate-100 bg-slate-50/80 -mx-5 px-5 py-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <label
+                      htmlFor={`spots-input-${trip.slug}`}
+                      className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block"
+                    >
+                      Remaining Spots
+                    </label>
+                    <span className="text-[11px] text-slate-400">
+                      Live on website
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      id={`spots-input-${trip.slug}`}
+                      type="number"
+                      min={0}
+                      max={999}
+                      value={cardSpots[trip.slug] ?? trip.remainingSpots ?? 10}
+                      onChange={(e) => handleSpotChange(trip.slug, e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleQuickSaveSpots(trip);
+                        }
+                      }}
+                      className="w-16 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center font-bold text-sm text-[#0a2558] focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      aria-label={`Remaining spots for ${trip.name}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleQuickSaveSpots(trip)}
+                      disabled={savingSpotsSlug === trip.slug}
+                      className="rounded-lg bg-[#0a2558] hover:bg-[#123363] text-white px-3 py-1.5 text-xs font-bold transition-all shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
+                    >
+                      {savingSpotsSlug === trip.slug ? "Saving..." : "Save"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               {/* Action Buttons */}
-              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={() => handleEdit(trip)}
@@ -297,6 +412,44 @@ export function TripsManager({ initialTrips }: { initialTrips: CuratedTrip[] }) 
                     onChange={(e) => setEditingTrip({ ...editingTrip, duration: e.target.value })}
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-blue-600 focus:outline-none"
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-600 uppercase mb-1">
+                    Group Size Description
+                  </label>
+                  <input
+                    type="text"
+                    value={editingTrip.groupSize || ""}
+                    onChange={(e) => setEditingTrip({ ...editingTrip, groupSize: e.target.value })}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    placeholder="e.g. Small Group (Max 10 Divers)"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-600 uppercase mb-1">
+                    Remaining Spots (Public Website Availability)
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    max={999}
+                    value={editingTrip.remainingSpots ?? 10}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      setEditingTrip({
+                        ...editingTrip,
+                        remainingSpots: isNaN(val) ? 0 : Math.max(0, val),
+                      });
+                    }}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-blue-600 focus:outline-none font-bold text-[#0a2558]"
+                    placeholder="e.g. 8"
+                  />
+                  <p className="mt-1 text-[11px] text-slate-400">
+                    Live synchronization with Public Website (e.g. &quot;8 spots left&quot;).
+                  </p>
                 </div>
               </div>
 

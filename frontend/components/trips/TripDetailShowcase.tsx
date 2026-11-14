@@ -253,8 +253,14 @@ export function TripDetailShowcase({
                 <Users className="size-5" />
               </div>
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-widest text-sky-300/70">Group Size</p>
-                <p className="text-sm sm:text-base font-bold text-white">{trip.groupSize}</p>
+                <p className="text-[0.65rem] font-bold uppercase tracking-widest text-sky-300/70">
+                  {trip.remainingSpots !== undefined ? "Availability" : "Group Size"}
+                </p>
+                <p className="text-sm sm:text-base font-bold text-white">
+                  {trip.remainingSpots !== undefined
+                    ? (trip.remainingSpots > 0 ? `${trip.remainingSpots} spots left` : "Waitlist only")
+                    : trip.groupSize}
+                </p>
               </div>
             </div>
           </div>

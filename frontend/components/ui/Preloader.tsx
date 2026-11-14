@@ -145,17 +145,6 @@ export function Preloader() {
 
       {/* Subtle bottom edge lift highlight to give physical curtain weight */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-sky-300/30" />
-
-      {/* Discrete skip hint */}
-      <div
-        className="pointer-events-none absolute bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 transition-opacity duration-300"
-        style={{ opacity: isLifting ? 0 : 0.75 }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-sky-300 animate-pulse" />
-        <span className="text-[10px] sm:text-[11px] font-sans font-light tracking-[0.2em] uppercase text-sky-100/80">
-          Click or press Esc to enter
-        </span>
-      </div>
     </div>
   );
 }

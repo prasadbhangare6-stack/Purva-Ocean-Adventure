@@ -8,6 +8,7 @@ export type CuratedTrip = {
   dives: string;
   experienceLevel: string;
   groupSize: string;
+  remainingSpots?: number;
   coverImage: string;
   galleryImages: string[];
   summary: string;
@@ -41,6 +42,7 @@ export const CURATED_TRIPS: Record<string, CuratedTrip> = {
     dives: "10 Guided Boat Dives",
     experienceLevel: "Open Water Diver & Above",
     groupSize: "Small Group (Max 10 Divers)",
+    remainingSpots: 10,
     coverImage: "/media/maafushi-maldives.jpg",
     galleryImages: [
       "/media/maafushi-maldives.jpg",
@@ -149,6 +151,7 @@ export const CURATED_TRIPS: Record<string, CuratedTrip> = {
     dives: "12 Guided Boat & Lagoon Dives",
     experienceLevel: "Open Water Diver & Snorkelers",
     groupSize: "Intimate Group (Max 8 Divers)",
+    remainingSpots: 8,
     coverImage: "/media/lakshadweep-love.jpg",
     galleryImages: [
       "/media/lakshadweep-love.jpg",
@@ -256,6 +259,7 @@ export const CURATED_TRIPS: Record<string, CuratedTrip> = {
     dives: "15+ Boat & Night Dives",
     experienceLevel: "Advanced Open Water (Or 15+ logged dives)",
     groupSize: "Exclusive Liveaboard Group",
+    remainingSpots: 12,
     coverImage: "/media/maldives-liveaboard.jpg",
     galleryImages: [
       "/media/maldives-liveaboard.jpg",

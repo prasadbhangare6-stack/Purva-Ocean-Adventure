@@ -18,6 +18,7 @@ export type UpcomingTripItem = {
   slug: string;
   priceEstimate?: string;
   available?: boolean;
+  remainingSpots?: number;
 };
 
 export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
@@ -30,7 +31,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     description:
       "Join us on an unforgettable dive expedition to Maafushi, Maldives. Explore pristine reefs, vibrant marine life, and crystal clear waters in one of the world's most iconic dive destinations.",
     image: "/media/maafushi-maldives.jpg",
-    tag: "Upcoming Trip",
+    tag: "10 spots left",
     highlights: [
       "Nurse Shark Channel Gatherings",
       "Manta Ray Cleaning Stations",
@@ -40,6 +41,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     slug: "maafushi-madness-maldives",
     priceEstimate: "All Inclusions Available On Request",
     available: true,
+    remainingSpots: 10,
   },
   {
     id: "lakshadweep-love",
@@ -50,7 +52,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     description:
       "Discover the untouched paradise of Lakshadweep. Dive into crystal clear waters with vibrant sea turtles, pristine coral formations, dramatic drop-offs, and remote tropical atoll adventures.",
     image: "/media/lakshadweep-love.jpg",
-    tag: "Upcoming Trip",
+    tag: "8 spots left",
     highlights: [
       "Resident Green Sea Turtles",
       "Untouched Coral Reef Gardens",
@@ -60,6 +62,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     slug: "lakshadweep-love",
     priceEstimate: "Limited Spots Available",
     available: true,
+    remainingSpots: 8,
   },
   {
     id: "maldives-feb",
@@ -70,7 +73,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     description:
       "A signature ocean journey through world-famous Maldivian reefs and deep channels. Encounter whale sharks, eagle rays, and night dives with hunting nurse sharks in paradise.",
     image: "/media/maldives-liveaboard.jpg",
-    tag: "Dates Will Be Out Soon",
+    tag: "12 spots left",
     highlights: [
       "Pelagic Whale Shark Searches",
       "Oceanic Manta Ray Encounters",
@@ -80,6 +83,7 @@ export const UPCOMING_TRIPS_DATA: UpcomingTripItem[] = [
     slug: "maldives-dive-expedition",
     priceEstimate: "Dates Announcing Soon",
     available: false,
+    remainingSpots: 12,
   },
 ];
 
@@ -97,6 +101,7 @@ export function UpcomingTripsShowcase({ initialTrips }: { initialTrips?: Upcomin
         if (data.success && data.data?.trips?.length) {
           const mapped: UpcomingTripItem[] = data.data.trips.map((t: Record<string, unknown>) => {
             const pricing = t.pricing as { displayText?: string } | undefined;
+            const spots = typeof t.remainingSpots === "number" ? t.remainingSpots : undefined;
             return {
               id: (t.slug as string) || "trip",
               name: (t.name as string) || "",
@@ -105,11 +110,14 @@ export function UpcomingTripsShowcase({ initialTrips }: { initialTrips?: Upcomin
               meta: `${(t.duration as string) || ""} | ${(t.dives as string) || ""}`,
               description: ((t.summary as string) || (t.overview as string)) || "",
               image: (t.coverImage as string) || "/media/maafushi-maldives.jpg",
-              tag: t.available ? "Upcoming Trip" : "Waitlist Only",
+              tag: spots !== undefined
+                ? (spots > 0 ? `${spots} spots left` : "Waitlist Only")
+                : (t.available ? "Upcoming Trip" : "Waitlist Only"),
               highlights: (t.highlights as string[]) || [],
               slug: (t.slug as string) || "",
               available: Boolean(t.available),
               priceEstimate: pricing?.displayText || "Available on request",
+              remainingSpots: spots,
             };
           });
           setTrips(mapped);
@@ -275,6 +283,9 @@ export function UpcomingTripsShowcase({ initialTrips }: { initialTrips?: Upcomin
               </h2>
               <p className="mt-0.5 text-[0.68rem] sm:text-xs font-medium text-sky-100/90 line-clamp-1">
                 {activeTrip.meta}
+                {activeTrip.remainingSpots !== undefined && (
+                  <> • <span className="text-[#E8C58F] font-semibold">{activeTrip.remainingSpots > 0 ? `${activeTrip.remainingSpots} spots left` : "Waitlist only"}</span></>
+                )}
               </p>
             </div>
           </div>
