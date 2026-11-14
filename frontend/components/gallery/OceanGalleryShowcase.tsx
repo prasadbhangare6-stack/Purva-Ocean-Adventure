@@ -4,8 +4,9 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowRight, Maximize2 } from "lucide-react";
 import { ALL_GALLERY_PHOTOS, type FullPhotoItem } from "@/lib/data/curatedGallery";
+import { GalleryLightbox } from "./GalleryLightbox";
 
 type GalleryCategory =
   | "ALL"
@@ -29,6 +30,7 @@ export type GalleryCardItem = FullPhotoItem;
 export function OceanGalleryShowcase() {
   const [activeTab, setActiveTab] = useState<GalleryCategory>("ALL");
   const [items, setItems] = useState<GalleryCardItem[]>(ALL_GALLERY_PHOTOS);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/admin/content?resource=gallery")
@@ -62,14 +64,30 @@ export function OceanGalleryShowcase() {
   const findById = (id: string, fallbackIndex: number): GalleryCardItem =>
     items.find((i) => i.id === id) || items[fallbackIndex] || ALL_GALLERY_PHOTOS[0];
 
+  const openLightboxForItem = (item: GalleryCardItem) => {
+    const idx = items.findIndex((i) => i.id === item.id);
+    if (idx !== -1) {
+      setLightboxIndex(idx);
+    }
+  };
+
   const renderCard = (item: GalleryCardItem, extraClasses: string = "", objectPos: string = "object-center") => {
     if (!item) return null;
 
     return (
-      <Link
+      <div
         key={item.id}
-        href={`/gallery?photo=${item.id}`}
-        title={`Watch ${item.title} in full gallery`}
+        role="button"
+        tabIndex={0}
+        onClick={() => openLightboxForItem(item)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openLightboxForItem(item);
+          }
+        }}
+        title={`View ${item.title}`}
+        aria-label={`View ${item.title}`}
         className={cn(
           "group relative block h-full w-full min-h-0 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-[#02182c]/80 shadow-[0_12px_40px_rgba(0,0,0,0.45)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_18px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1",
           extraClasses,
@@ -101,21 +119,20 @@ export function OceanGalleryShowcase() {
           />
         )}
 
-        {/* Subtle ambient hover vignette only (zero tags overlaid on videos) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        {/* Ambient hover vignette */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-        {/* Subtle diagonal sheen sweep on hover */}
+        {/* Hover sheen sweep */}
         <span className="pointer-events-none absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full transition-transform duration-700 ease-in-out group-hover:translate-x-[280%]" />
 
-        {/* Direct page link indicator */}
-        <div className="absolute top-3 right-3 rounded-full bg-black/45 backdrop-blur-md p-1.5 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-white/15">
-          <ArrowUpRight className="size-3.5" />
+        {/* Expand icon on hover */}
+        <div className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-md p-2 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-white/20">
+          <Maximize2 className="size-3.5 text-[#E8C58F]" />
         </div>
-      </Link>
+      </div>
     );
   };
 
-  // Curated showcase slots matching natural video orientations (portrait in tall columns, landscape in wide slot)
   const card1 = findById("shark-sunbeams", 0);
   const card2Top = findById("golden-anthias-garden", 1);
   const card2BotLeft = findById("hawksbill-turtle-glide", 2);
@@ -128,13 +145,13 @@ export function OceanGalleryShowcase() {
       id="gallery"
       className="relative isolate flex min-h-screen min-h-dvh w-full flex-col justify-between overflow-hidden bg-[#02182c] pt-20 sm:pt-24 pb-4 sm:pb-6 select-none scroll-mt-20"
     >
-      {/* Background Lighting: Clean oceanic navy gradient matching all pages */}
+      {/* Background Lighting */}
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#02182c] via-[#022442] to-[#011427]"
         aria-hidden="true"
       />
 
-      {/* Top-Right Corner Background Image: Spotted Eagle Rays & Ocean Sunbeams (seamlessly alpha-feathered) */}
+      {/* Top-Right Corner Background Image */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden select-none sm:h-[600px] lg:h-[680px]"
         aria-hidden="true"
@@ -147,7 +164,7 @@ export function OceanGalleryShowcase() {
       >
         <Image
           src="/media/gallery-eagle-ray-bg.jpg"
-          alt="Two spotted eagle rays gliding gracefully through sunlit tropical ocean over coral reef"
+          alt="Two spotted eagle rays gliding gracefully through sunlit tropical ocean"
           fill
           priority
           sizes="100vw"
@@ -156,7 +173,6 @@ export function OceanGalleryShowcase() {
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#02182c]/55 to-transparent" />
       </div>
 
-      {/* Soft natural sunbeams streaming from top */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(ellipse_at_65%_0%,rgba(110,195,255,0.2)_0%,rgba(2,24,44,0)_70%)]"
         aria-hidden="true"
@@ -171,7 +187,6 @@ export function OceanGalleryShowcase() {
         {/* Top Header Row */}
         <div className="shrink-0 flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
           <div className="max-w-2xl">
-            {/* Eyebrow with horizontal divider line */}
             <div className="flex items-center gap-3">
               <span className="text-[0.65rem] sm:text-xs font-semibold tracking-[0.24em] text-sky-300 uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]">
                 VISUAL COLLECTION
@@ -179,18 +194,15 @@ export function OceanGalleryShowcase() {
               <span className="h-px w-16 sm:w-24 bg-sky-300/45" />
             </div>
 
-            {/* Heading: Ocean Gallery */}
             <h2 className="mt-2 font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white leading-[1.08] drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]">
               Ocean <span className="font-serif italic font-normal text-[#8ec8f6]">Gallery</span>
             </h2>
 
-            {/* Subtitle / body text with generous spacing below the heading */}
             <p className="mt-4 sm:mt-5 max-w-xl text-xs sm:text-sm md:text-[0.94rem] text-sky-100/85 font-light leading-relaxed tracking-wide">
-              Glimpses from past journeys across Maldivian reefs, pelagic highways, coral sanctuaries, and the inspiring community of divers who explore beneath the surface with us.
+              Glimpses from past journeys across Maldivian reefs, pelagic highways, coral sanctuaries, and the inspiring community of divers who explore beneath the surface with us. Click any capture to view in full-screen.
             </p>
           </div>
 
-          {/* Direct link to open the full gallery collection */}
           <div className="shrink-0 pb-1">
             <Link
               href="/gallery"
@@ -224,16 +236,14 @@ export function OceanGalleryShowcase() {
           })}
         </div>
 
-        {/* Video Grid Area: Every slot strictly locked with min-h-0 & absolute videos so nothing overflows */}
+        {/* Video Grid Area */}
         <div className="relative z-10 flex-1 min-h-0 my-auto flex w-full items-center">
           {activeTab === "ALL" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1.65fr_1fr_1fr] gap-3 sm:gap-3.5 w-full h-[46vh] sm:h-[48vh] lg:h-[50vh] max-h-[465px]">
-              {/* Column 1: Tall vertical frame matching portrait video */}
               <div className="h-full w-full min-h-0">
                 {renderCard(card1)}
               </div>
 
-              {/* Column 2: Top Landscape video + Bottom 2 split cards */}
               <div className="h-full w-full min-h-0 flex flex-col gap-3 sm:gap-3.5">
                 <div className="flex-[1.15] min-h-0 w-full">
                   {renderCard(card2Top)}
@@ -248,12 +258,10 @@ export function OceanGalleryShowcase() {
                 </div>
               </div>
 
-              {/* Column 3: Tall vertical frame matching portrait video (Eagle Ray Squadron) */}
               <div className="h-full w-full min-h-0">
                 {renderCard(card3Tall)}
               </div>
 
-              {/* Column 4: Tall vertical frame matching portrait video (Diver & Sea Turtle) */}
               <div className="h-full w-full min-h-0">
                 {renderCard(card4Tall)}
               </div>
@@ -276,6 +284,14 @@ export function OceanGalleryShowcase() {
           )}
         </div>
       </div>
+
+      {/* Professional Full-Screen Lightbox Viewer */}
+      <GalleryLightbox
+        items={items}
+        currentIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={(newIdx) => setLightboxIndex(newIdx)}
+      />
     </section>
   );
 }

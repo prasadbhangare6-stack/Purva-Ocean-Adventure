@@ -7,15 +7,13 @@ import { useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils/cn";
 import {
-  X,
-  ChevronLeft,
-  ChevronRight,
   ArrowLeft,
   Play,
   Film,
   CheckCircle2,
 } from "lucide-react";
 import { ALL_GALLERY_PHOTOS as BASE_GALLERY_PHOTOS, type FullPhotoItem } from "@/lib/data/curatedGallery";
+import { GalleryLightbox } from "./GalleryLightbox";
 
 export type { FullPhotoItem };
 export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = BASE_GALLERY_PHOTOS;
@@ -60,56 +58,31 @@ function GalleryContent() {
       .catch(() => {});
   }, []);
 
-  // If URL has a photo/video param: highlight and scroll to it
-  useEffect(() => {
-    if (initialPhotoParam) {
-      setHighlightedId(initialPhotoParam);
-      const timer = setTimeout(() => {
-        const el = document.getElementById(`photo-${initialPhotoParam}`);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [initialPhotoParam]);
-
   // Filtered items
   const filteredPhotos = useMemo(() => {
     if (activeCategory === "ALL") return photos;
     return photos.filter((p) => p.category === activeCategory);
   }, [photos, activeCategory]);
 
+  // If URL has a photo/video param: open in lightbox immediately
+  useEffect(() => {
+    if (initialPhotoParam && photos.length > 0) {
+      setHighlightedId(initialPhotoParam);
+      const idx = photos.findIndex((p) => p.id === initialPhotoParam);
+      if (idx !== -1) {
+        setLightboxIndex(idx);
+      }
+    }
+  }, [initialPhotoParam, photos]);
+
   const openLightboxById = (id: string) => {
-    const idx = photos.findIndex((p) => p.id === id);
-    if (idx !== -1) setLightboxIndex(idx);
+    const idx = filteredPhotos.findIndex((p) => p.id === id);
+    if (idx !== -1) {
+      setLightboxIndex(idx);
+    }
   };
 
   const closeLightbox = () => setLightboxIndex(null);
-
-  const prevPhoto = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((lightboxIndex - 1 + photos.length) % photos.length);
-  };
-
-  const nextPhoto = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((lightboxIndex + 1) % photos.length);
-  };
-
-  // Keyboard navigation for Lightbox
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") prevPhoto();
-      if (e.key === "ArrowRight") nextPhoto();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxIndex, photos.length]);
-
-  const activeItem = lightboxIndex !== null ? photos[lightboxIndex] : null;
 
   return (
     <div className="relative min-h-screen bg-[#010f20] text-white pt-20 sm:pt-24 pb-24 sm:pb-32 overflow-hidden">
@@ -118,7 +91,7 @@ function GalleryContent() {
         className="pointer-events-none fixed inset-0 z-0 bg-gradient-to-b from-[#02182c] via-[#011427] to-[#010f20]"
         aria-hidden="true"
       />
-      {/* Top-Right Corner Background Image: Spotted Eagle Rays & Ocean Sunbeams (seamlessly alpha-feathered) */}
+      {/* Top-Right Corner Background Image */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden select-none sm:h-[600px] lg:h-[680px]"
         aria-hidden="true"
@@ -131,7 +104,7 @@ function GalleryContent() {
       >
         <Image
           src="/media/gallery-eagle-ray-bg.jpg"
-          alt="Two spotted eagle rays gliding gracefully through sunlit tropical ocean over coral reef"
+          alt="Spotted eagle rays gliding gracefully through sunlit tropical ocean"
           fill
           priority
           sizes="100vw"
@@ -139,10 +112,6 @@ function GalleryContent() {
         />
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#02182c]/55 to-transparent" />
       </div>
-      <div
-        className="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] bg-[radial-gradient(ellipse_at_center,rgba(80,180,250,0.18)_0%,transparent_70%)] blur-3xl"
-        aria-hidden="true"
-      />
 
       <Container className="relative z-10">
         {/* Navigation & Header */}
@@ -171,7 +140,7 @@ function GalleryContent() {
               </h1>
 
               <p className="mt-5 sm:mt-6 text-sm sm:text-base text-sky-100/85 font-light leading-relaxed max-w-2xl">
-                Explore our full collection of underwater encounters, pelagic highways, vibrant coral sanctuaries, and scuba diving reels across the Maldives, Lakshadweep, and beyond.
+                Explore our full collection of underwater encounters, pelagic highways, vibrant coral sanctuaries, and scuba diving reels across the Maldives, Lakshadweep, and beyond. Click any photograph or video to view in cinematic full-screen.
               </p>
             </div>
 
@@ -212,15 +181,15 @@ function GalleryContent() {
           })}
         </div>
 
-        {/* Notification pill if arriving via gallery link */}
+        {/* Notification pill if arriving via direct share link */}
         {highlightedId && (
           <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#E8C58F]/20 border border-[#E8C58F]/40 px-4 py-1.5 text-xs text-[#E8C58F] animate-fade-up">
             <CheckCircle2 className="size-3.5" />
-            <span>Viewing selected capture below • Click any video to watch in full-screen</span>
+            <span>Viewing capture • Click any media to open the full-screen cinematic viewer</span>
           </div>
         )}
 
-        {/* Full Visual Masonry / Adaptive Grid: Every card hugs its exact aspect ratio with zero blank space */}
+        {/* Full Visual Masonry / Adaptive Grid */}
         <div
           className={cn(
             "mt-8",
@@ -238,7 +207,16 @@ function GalleryContent() {
               <div
                 key={photo.id}
                 id={`photo-${photo.id}`}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${photo.title}`}
                 onClick={() => openLightboxById(photo.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openLightboxById(photo.id);
+                  }
+                }}
                 className={cn(
                   "group relative block w-full overflow-hidden rounded-2xl sm:rounded-3xl border bg-[#02182c]/80 shadow-[0_12px_36px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1.5",
                   filteredPhotos.length >= 4 && "break-inside-avoid mb-4 sm:mb-5",
@@ -247,7 +225,6 @@ function GalleryContent() {
                     : "border-white/15",
                 )}
               >
-                {/* Exact aspect ratio container — hugs video tightly with zero trailing blank space */}
                 <div
                   className={cn(
                     "relative w-full overflow-hidden",
@@ -278,7 +255,7 @@ function GalleryContent() {
                     />
                   )}
 
-                  {/* Subtle hover vignette only (zero tags overlaid on videos) */}
+                  {/* Subtle hover vignette */}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   {/* Top expand/play icon on hover */}
@@ -292,122 +269,13 @@ function GalleryContent() {
         </div>
       </Container>
 
-      {/* Interactive Full-Screen Video Lightbox Player */}
-      {lightboxIndex !== null && activeItem && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-[100] flex flex-col justify-between bg-black/95 backdrop-blur-2xl p-4 sm:p-6 select-none"
-          onClick={closeLightbox}
-        >
-          {/* Top Bar with Counter and Close Button */}
-          <div
-            className="flex items-center justify-between z-30"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-white/85 font-medium tracking-wider uppercase">
-                Video {lightboxIndex + 1} of {photos.length}
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={closeLightbox}
-              aria-label="Close video preview"
-              className="rounded-full bg-white/15 p-2.5 text-white hover:bg-white/30 transition-all cursor-pointer shadow-lg"
-            >
-              <X className="size-6" />
-            </button>
-          </div>
-
-          {/* Center Media Container with Prev / Next Navigation */}
-          <div
-            className="relative flex items-center justify-center flex-1 my-2 overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={prevPhoto}
-              aria-label="Previous video"
-              className="absolute left-2 sm:left-6 z-30 rounded-full bg-black/70 border border-white/20 p-3 sm:p-3.5 text-white hover:bg-white/20 hover:scale-110 transition-all cursor-pointer shadow-2xl backdrop-blur-md"
-            >
-              <ChevronLeft className="size-6 sm:size-7" />
-            </button>
-
-            <button
-              type="button"
-              onClick={nextPhoto}
-              aria-label="Next video"
-              className="absolute right-2 sm:right-6 z-30 rounded-full bg-black/70 border border-white/20 p-3 sm:p-3.5 text-white hover:bg-white/20 hover:scale-110 transition-all cursor-pointer shadow-2xl backdrop-blur-md"
-            >
-              <ChevronRight className="size-6 sm:size-7" />
-            </button>
-
-            <div className="relative h-[68vh] sm:h-[75vh] w-full max-w-5xl flex items-center justify-center">
-              {isVideoSrc(activeItem.src) ? (
-                <video
-                  key={activeItem.src}
-                  src={activeItem.src}
-                  controls
-                  autoPlay
-                  loop
-                  playsInline
-                  className="max-h-full max-w-full rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.85)] outline-none"
-                />
-              ) : (
-                <Image
-                  src={activeItem.src}
-                  alt={activeItem.alt}
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="object-contain drop-shadow-[0_15px_40px_rgba(0,0,0,0.8)]"
-                />
-              )}
-            </div>
-          </div>
-
-          {/* Thumbnail quick-strip */}
-          <div
-            className="flex flex-col items-center text-center z-30 max-w-2xl mx-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="mt-2 hidden sm:flex items-center gap-2 overflow-x-auto max-w-2xl py-1 px-2">
-              {photos.map((thumb, idx) => (
-                <button
-                  key={thumb.id}
-                  type="button"
-                  onClick={() => setLightboxIndex(idx)}
-                  className={cn(
-                    "relative size-12 shrink-0 overflow-hidden rounded-lg border-2 transition-all cursor-pointer bg-[#02182c]",
-                    idx === lightboxIndex
-                      ? "border-[#E8C58F] scale-110 shadow-lg"
-                      : "border-transparent opacity-50 hover:opacity-100",
-                  )}
-                >
-                  {isVideoSrc(thumb.src) ? (
-                    <video
-                      src={thumb.src}
-                      muted
-                      playsInline
-                      preload="metadata"
-                      className="size-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={thumb.src}
-                      alt={thumb.alt}
-                      fill
-                      className="object-cover"
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Professional Full-Screen Media Lightbox Viewer */}
+      <GalleryLightbox
+        items={filteredPhotos}
+        currentIndex={lightboxIndex}
+        onClose={closeLightbox}
+        onNavigate={(newIdx) => setLightboxIndex(newIdx)}
+      />
     </div>
   );
 }
