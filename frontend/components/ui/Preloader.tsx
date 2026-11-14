@@ -3,39 +3,39 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 
-// Total cinematic experience: exactly ~1.0 second
-const HOLD_DURATION_MS = 350; // Hold scene for ~350ms so the viewer perceives the underwater atmosphere
-const CURTAIN_OPEN_MS = 650;  // Center-to-sides cinematic parting over 650ms (Total = 1000ms / 1 second)
+// Fast, premium 1.0-second total opening experience
+const HOLD_DURATION_MS = 350; // Hold scene for ~350ms so viewer absorbs the ocean atmosphere
+const CURTAIN_LIFT_MS = 650;  // Smooth upward curtain lift over 650ms (Total = 1000ms / 1 second)
 
 /**
- * Cinematic Center-to-Sides Curtain Opening:
- * - Total duration: ~1.0s (350ms hold + 650ms fluid parting).
- * - Curtains open smoothly from the centre towards both sides.
+ * Cinematic Upward Curtain Opening:
+ * - Moves directly from bottom up as a single unified curtain (no split).
+ * - Total duration: ~1.0s (350ms hold + 650ms fluid upward lift).
  * - Subtle ambient underwater motion: slow camera zoom, light rays, rising micro-bubbles.
- * - Revealing the homepage directly through the center parting with zero lag.
+ * - Revealing the homepage cleanly underneath.
  * - Skip anytime via click or Esc/Space/Enter.
- * - Respects prefers-reduced-motion with an instant gentle fade.
+ * - Respects prefers-reduced-motion with a gentle fast fade.
  */
 export function Preloader() {
-  const [isOpening, setIsOpening] = useState(false);
+  const [isLifting, setIsLifting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Trigger the split curtain opening from center towards both sides
-  const startOpening = useCallback(() => {
-    setIsOpening(true);
+  // Trigger the upward curtain lift (bottom to top)
+  const startLifting = useCallback(() => {
+    setIsLifting(true);
 
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
 
-    // Cleanly unmount and restore scrolling right when curtains glide off-screen
+    // Cleanly unmount and restore scrolling right when the curtain glides off top
     setTimeout(() => {
       setIsComplete(true);
       document.body.style.overflow = "";
-    }, CURTAIN_OPEN_MS + 30);
+    }, CURTAIN_LIFT_MS + 30);
   }, []);
 
   useEffect(() => {
@@ -49,16 +49,16 @@ export function Preloader() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // 350ms display timer before smooth center parting begins
+    // 350ms display timer before smooth upward curtain lift begins
     timerRef.current = setTimeout(() => {
-      startOpening();
+      startLifting();
     }, HOLD_DURATION_MS);
 
-    // Keyboard shortcut to instantly open curtain
+    // Keyboard shortcut to instantly lift curtain
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === " " || e.key === "Enter") {
         e.preventDefault();
-        startOpening();
+        startLifting();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -68,9 +68,9 @@ export function Preloader() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [startOpening]);
+  }, [startLifting]);
 
-  // Clean unmount once curtains have fully opened
+  // Clean unmount once curtain has fully lifted
   if (isComplete) return null;
 
   // Reduced-motion fallback: gentle fast fade (400ms)
@@ -79,9 +79,9 @@ export function Preloader() {
       <div
         role="status"
         aria-label="Purva Ocean Adventures"
-        onClick={startOpening}
+        onClick={startLifting}
         className={`fixed inset-0 z-[9999] bg-[#011425] transition-opacity duration-400 ease-out cursor-pointer select-none flex items-center justify-center p-4 sm:p-8 ${
-          isOpening ? "opacity-0 pointer-events-none" : "opacity-100"
+          isLifting ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         <div className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center">
@@ -98,11 +98,39 @@ export function Preloader() {
     );
   }
 
-  // Render underwater scene with subtle ambient motion
-  const renderSceneHalf = (align: "left" | "right") => (
+  return (
     <div
-      className={`absolute top-0 ${align === "left" ? "left-0" : "right-0"} w-[100vw] h-full overflow-hidden select-none bg-[#011425] pointer-events-none`}
+      role="status"
+      aria-label="Purva Ocean Adventures - Discover • Dive • Connect"
+      onClick={startLifting}
+      className={`fixed inset-0 z-[9999] overflow-hidden select-none bg-[#011425] cursor-pointer will-change-transform ${
+        isLifting ? "pointer-events-none" : "pointer-events-auto"
+      }`}
+      style={{
+        transform: isLifting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
+        transition: `transform ${CURTAIN_LIFT_MS}ms cubic-bezier(0.7, 0, 0.2, 1)`,
+        boxShadow: isLifting ? "0 30px 80px rgba(0, 5, 15, 0.95)" : "none",
+      }}
     >
+      {/* 60fps lightweight hardware-accelerated animations */}
+      <style>{`
+        @keyframes kenBurnsZoom {
+          0% { transform: scale(1); }
+          100% { transform: scale(1.04); }
+        }
+        @keyframes sunlightDrift {
+          0% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
+          50% { transform: translate3d(4%, 3%, 0) rotate(0.8deg); }
+          100% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
+        }
+        @keyframes bubbleRise {
+          0% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
+          20% { opacity: 0.8; }
+          80% { opacity: 0.8; }
+          100% { transform: translate3d(10px, -90px, 0) scale(1.2); opacity: 0; }
+        }
+      `}</style>
+
       {/* 1. Deep ocean backdrop extension */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <Image
@@ -172,72 +200,9 @@ export function Preloader() {
           />
         </div>
       </div>
-    </div>
-  );
 
-  return (
-    <div
-      role="status"
-      aria-label="Purva Ocean Adventures - Discover • Dive • Connect"
-      onClick={startOpening}
-      className={`fixed inset-0 z-[9999] overflow-hidden select-none cursor-pointer ${
-        isOpening ? "pointer-events-none" : "pointer-events-auto"
-      }`}
-    >
-      {/* 60fps lightweight hardware-accelerated animations */}
-      <style>{`
-        @keyframes kenBurnsZoom {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.04); }
-        }
-        @keyframes sunlightDrift {
-          0% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
-          50% { transform: translate3d(4%, 3%, 0) rotate(0.8deg); }
-          100% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
-        }
-        @keyframes bubbleRise {
-          0% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
-          20% { opacity: 0.8; }
-          80% { opacity: 0.8; }
-          100% { transform: translate3d(10px, -90px, 0) scale(1.2); opacity: 0; }
-        }
-      `}</style>
-
-      {/* LEFT CURTAIN WING (Opens smoothly from centre towards left) */}
-      <div
-        className="absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden will-change-transform bg-[#011425]"
-        style={{
-          transform: isOpening ? "translate3d(-100%, 0, 0)" : "translate3d(0, 0, 0)",
-          transition: `transform ${CURTAIN_OPEN_MS}ms cubic-bezier(0.7, 0, 0.2, 1)`,
-          boxShadow: isOpening ? "-20px 0 50px rgba(0, 0, 0, 0.85)" : "none",
-        }}
-      >
-        {renderSceneHalf("left")}
-
-        {/* Luminous center seam edge highlight on left wing */}
-        <div
-          className="absolute top-0 bottom-0 right-0 w-[2px] bg-gradient-to-b from-sky-400/0 via-sky-300/80 to-sky-400/0 transition-opacity duration-250"
-          style={{ opacity: isOpening ? 0 : 0.85 }}
-        />
-      </div>
-
-      {/* RIGHT CURTAIN WING (Opens smoothly from centre towards right) */}
-      <div
-        className="absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden will-change-transform bg-[#011425]"
-        style={{
-          transform: isOpening ? "translate3d(100%, 0, 0)" : "translate3d(0, 0, 0)",
-          transition: `transform ${CURTAIN_OPEN_MS}ms cubic-bezier(0.7, 0, 0.2, 1)`,
-          boxShadow: isOpening ? "20px 0 50px rgba(0, 0, 0, 0.85)" : "none",
-        }}
-      >
-        {renderSceneHalf("right")}
-
-        {/* Luminous center seam edge highlight on right wing */}
-        <div
-          className="absolute top-0 bottom-0 left-0 w-[2px] bg-gradient-to-b from-sky-400/0 via-sky-300/80 to-sky-400/0 transition-opacity duration-250"
-          style={{ opacity: isOpening ? 0 : 0.85 }}
-        />
-      </div>
+      {/* Bottom edge highlight that lifts with the curtain giving physical theatrical weight */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-sky-400/0 via-sky-300/75 to-sky-400/0" />
     </div>
   );
 }
