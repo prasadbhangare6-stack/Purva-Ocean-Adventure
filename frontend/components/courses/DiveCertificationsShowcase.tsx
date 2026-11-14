@@ -28,29 +28,29 @@ export function DiveCertificationsShowcase({
   return (
     <section
       id="courses"
-      className="relative isolate flex min-h-screen min-h-dvh w-full flex-col justify-between overflow-hidden bg-white pt-20 sm:pt-24 pb-8 sm:pb-12 select-none scroll-mt-20"
+      className="relative isolate flex w-full flex-col justify-start md:justify-between min-h-0 md:min-h-screen md:min-h-dvh overflow-x-clip md:overflow-hidden bg-white pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 md:pb-12 select-none scroll-mt-20"
     >
       {/* Top Header Row: Eyebrow and Headline matching design mock */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16 shrink-0">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-8 lg:px-16 shrink-0 mb-6 sm:mb-8 md:mb-0">
         <p className="text-[0.68rem] sm:text-xs font-bold tracking-[0.24em] uppercase text-black/70 mb-1">
           LEARN • EXPLORE • GO FURTHER
         </p>
-        <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-black">
+        <h1 className="font-sans text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-black">
           DIVE <span className="text-[#38bdf8]">CERTIFICATIONS</span>
         </h1>
       </div>
 
-      {/* 3-Card Grid: Side-by-side matching the exact design mock */}
-      <div className="relative z-10 my-auto flex w-full max-w-7xl mx-auto items-center justify-center px-6 sm:px-10 lg:px-16 flex-1 min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full max-h-[58vh]">
+      {/* 3-Card Grid: Responsive stack on mobile, 3-column side-by-side on desktop */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex items-center justify-center px-4 sm:px-8 lg:px-16 my-0 md:my-auto flex-1 md:min-h-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-6 w-full max-h-none md:max-h-[58vh]">
           {courses.map((course) => (
             <Link
               key={course.slug}
               href={`/courses/${course.slug}`}
-              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white shadow-[0_12px_35px_rgba(2,24,54,0.08)] border border-slate-100 flex flex-col transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_22px_50px_rgba(2,24,54,0.18)] cursor-pointer"
+              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white shadow-[0_10px_30px_rgba(2,24,54,0.08)] border border-slate-100 flex flex-col transition-all duration-500 hover:-translate-y-1.5 md:hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(2,24,54,0.16)] cursor-pointer"
             >
               {/* Card Photo */}
-              <div className="relative aspect-[3/3.2] max-h-[36vh] sm:max-h-[38vh] w-full overflow-hidden bg-slate-900">
+              <div className="relative aspect-[16/10] sm:aspect-[4/3] md:aspect-[3/3.2] max-h-none md:max-h-[38vh] w-full overflow-hidden bg-slate-900">
                 <Image
                   src={course.coverImage}
                   alt={course.name}
@@ -65,12 +65,12 @@ export function DiveCertificationsShowcase({
 
               {/* Card Bottom Colored Bar matching design mock */}
               <div
-                className={`py-3.5 sm:py-4 px-5 sm:px-6 flex items-center justify-between font-bold text-xs sm:text-sm tracking-wider uppercase transition-colors ${course.cardTheme.pillBg} ${course.cardTheme.pillTextColor}`}
+                className={`py-3.5 sm:py-4 px-4 sm:px-6 flex items-center justify-between font-bold text-xs sm:text-sm tracking-wider uppercase transition-colors ${course.cardTheme.pillBg} ${course.cardTheme.pillTextColor}`}
               >
-                <span>{course.name}</span>
+                <span className="truncate pr-2">{course.name}</span>
                 <span
                   aria-hidden="true"
-                  className="text-base sm:text-lg transition-transform duration-300 group-hover:translate-x-2"
+                  className="text-base sm:text-lg shrink-0 transition-transform duration-300 group-hover:translate-x-1.5"
                 >
                   &rarr;
                 </span>
@@ -82,4 +82,3 @@ export function DiveCertificationsShowcase({
     </section>
   );
 }
-
