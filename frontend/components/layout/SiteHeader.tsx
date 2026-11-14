@@ -601,7 +601,7 @@ export function SiteHeader({ data }: { data: HeaderData }) {
             trigger={
               <span
                 className={cn(
-                  "inline-flex size-11 items-center justify-center rounded-full border backdrop-blur-sm lg:hidden transition-colors",
+                  "inline-flex size-11 items-center justify-center rounded-full border backdrop-blur-sm lg:hidden transition-colors cursor-pointer",
                   isBlackMode
                     ? "border-black/20 bg-black/5 text-black hover:bg-black/10"
                     : "border-white/30 bg-white/10 text-white hover:bg-white/20",
@@ -614,7 +614,6 @@ export function SiteHeader({ data }: { data: HeaderData }) {
             courseItems={courseItems}
             instagramUrl={instagramUrl}
             whatsappUrl={whatsappUrl}
-            onOpenSearch={() => setSearchOpen(true)}
           />
         </div>
       </div>
