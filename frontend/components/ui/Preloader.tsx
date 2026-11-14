@@ -3,43 +3,43 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 
-const HOLD_DURATION_MS = 3000; // Hold complete image for ~3 seconds
-const CURTAIN_LIFT_MS = 1100; // Smooth 1.1s upward curtain lift
+// Total cinematic experience: exactly ~1.0 second
+const HOLD_DURATION_MS = 350; // Hold scene for ~350ms so the viewer perceives the underwater atmosphere
+const CURTAIN_OPEN_MS = 650;  // Center-to-sides cinematic parting over 650ms (Total = 1000ms / 1 second)
 
 /**
- * Opening Curtain Screen:
- * - Shows the COMPLETE, UNCORRUPTED, UNCROPPED image (diver, logo, sharks) crisp and clear.
- * - Deep ocean ambient backdrop extends the image naturally across any screen size.
- * - After ~3 seconds, lifts upward (down to up) like a grand theatre curtain.
- * - Opens directly to reveal the website underneath with no distracting secondary animations.
- * - Click anywhere, tap on mobile, or press Esc/Space/Enter to lift immediately.
- * - Respects prefers-reduced-motion with a graceful fade.
- * - Cleanly unmounts from DOM after lifting with zero overhead.
+ * Cinematic Center-to-Sides Curtain Opening:
+ * - Total duration: ~1.0s (350ms hold + 650ms fluid parting).
+ * - Curtains open smoothly from the centre towards both sides.
+ * - Subtle ambient underwater motion: slow camera zoom, light rays, rising micro-bubbles.
+ * - Revealing the homepage directly through the center parting with zero lag.
+ * - Skip anytime via click or Esc/Space/Enter.
+ * - Respects prefers-reduced-motion with an instant gentle fade.
  */
 export function Preloader() {
-  const [isLifting, setIsLifting] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Trigger the upward curtain lift
-  const startLifting = useCallback(() => {
-    setIsLifting(true);
+  // Trigger the split curtain opening from center towards both sides
+  const startOpening = useCallback(() => {
+    setIsOpening(true);
 
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
 
-    // Cleanly unmount and restore scrolling after curtain slides off top
+    // Cleanly unmount and restore scrolling right when curtains glide off-screen
     setTimeout(() => {
       setIsComplete(true);
       document.body.style.overflow = "";
-    }, CURTAIN_LIFT_MS + 50);
+    }, CURTAIN_OPEN_MS + 30);
   }, []);
 
   useEffect(() => {
-    // Check accessibility
+    // Respect accessibility settings
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionQuery.matches) {
       setReducedMotion(true);
@@ -49,16 +49,16 @@ export function Preloader() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // 3-second display timer
+    // 350ms display timer before smooth center parting begins
     timerRef.current = setTimeout(() => {
-      startLifting();
+      startOpening();
     }, HOLD_DURATION_MS);
 
-    // Keyboard shortcut to instantly lift curtain
+    // Keyboard shortcut to instantly open curtain
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === " " || e.key === "Enter") {
         e.preventDefault();
-        startLifting();
+        startOpening();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -68,20 +68,20 @@ export function Preloader() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [startLifting]);
+  }, [startOpening]);
 
-  // Clean unmount once curtain has fully lifted
+  // Clean unmount once curtains have fully opened
   if (isComplete) return null;
 
-  // Reduced-motion fallback: gentle fade
+  // Reduced-motion fallback: gentle fast fade (400ms)
   if (reducedMotion) {
     return (
       <div
         role="status"
         aria-label="Purva Ocean Adventures"
-        onClick={startLifting}
-        className={`fixed inset-0 z-[9999] bg-[#011425] transition-opacity duration-700 ease-out cursor-pointer select-none flex items-center justify-center p-4 sm:p-8 ${
-          isLifting ? "opacity-0 pointer-events-none" : "opacity-100"
+        onClick={startOpening}
+        className={`fixed inset-0 z-[9999] bg-[#011425] transition-opacity duration-400 ease-out cursor-pointer select-none flex items-center justify-center p-4 sm:p-8 ${
+          isOpening ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         <div className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center">
@@ -98,20 +98,12 @@ export function Preloader() {
     );
   }
 
-  return (
+  // Render underwater scene with subtle ambient motion
+  const renderSceneHalf = (align: "left" | "right") => (
     <div
-      role="status"
-      aria-label="Purva Ocean Adventures - Discover • Dive • Connect"
-      onClick={startLifting}
-      className={`fixed inset-0 z-[9999] overflow-hidden select-none bg-[#011425] cursor-pointer will-change-transform shadow-[0_30px_80px_rgba(0,10,25,0.9)] ${
-        isLifting ? "pointer-events-none" : "pointer-events-auto"
-      }`}
-      style={{
-        transform: isLifting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
-        transition: `transform ${CURTAIN_LIFT_MS}ms cubic-bezier(0.77, 0, 0.175, 1)`,
-      }}
+      className={`absolute top-0 ${align === "left" ? "left-0" : "right-0"} w-[100vw] h-full overflow-hidden select-none bg-[#011425] pointer-events-none`}
     >
-      {/* Ambient background that matches the ocean tones seamlessly */}
+      {/* 1. Deep ocean backdrop extension */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <Image
           src="/brand/curtain-opening.jpg"
@@ -119,32 +111,133 @@ export function Preloader() {
           fill
           priority
           sizes="100vw"
-          className="object-cover blur-3xl opacity-35 scale-110"
+          className="object-cover blur-3xl opacity-40 scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#011425]/60 via-[#011c33]/40 to-[#011425]/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#011425]/50 via-[#011c33]/30 to-[#011425]/70" />
       </div>
 
-      {/* 
-        THE COMPLETE, UNCORRUPTED, UNCROPPED IMAGE:
-        - object-contain ensures 100% of the photograph is fully visible on any screen.
-        - Perfectly sharp and clear: no zooming, no pixelation, no edge cuts.
-        - Diver on left, logo in center, sharks on right all clearly visible.
-      */}
+      {/* 2. Moving light rays / caustics shimmer passing through water */}
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden opacity-35"
+        style={{
+          background:
+            "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(102, 180, 226, 0.4) 0%, rgba(1, 20, 37, 0) 75%)",
+        }}
+      >
+        <div
+          className="absolute -inset-full w-[300%] h-[300%] opacity-20"
+          style={{
+            background:
+              "repeating-linear-gradient(55deg, transparent, transparent 35px, rgba(255,255,255,0.08) 42px, transparent 70px)",
+            animation: "sunlightDrift 5s linear infinite",
+          }}
+        />
+      </div>
+
+      {/* 3. Small rising ocean bubbles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute bottom-16 left-[20%] size-2 rounded-full bg-sky-200/50 blur-[0.4px] border border-white/50"
+          style={{ animation: "bubbleRise 2.2s ease-in-out infinite" }}
+        />
+        <div
+          className="absolute bottom-28 left-[34%] size-1.5 rounded-full bg-sky-300/40 blur-[0.4px] border border-white/40"
+          style={{ animation: "bubbleRise 2.5s ease-in-out 0.3s infinite" }}
+        />
+        <div
+          className="absolute bottom-12 right-[30%] size-2.5 rounded-full bg-sky-200/50 blur-[0.4px] border border-white/50"
+          style={{ animation: "bubbleRise 2s ease-in-out 0.6s infinite" }}
+        />
+        <div
+          className="absolute bottom-24 right-[16%] size-1.5 rounded-full bg-sky-300/40 blur-[0.4px] border border-white/30"
+          style={{ animation: "bubbleRise 2.7s ease-in-out 0.2s infinite" }}
+        />
+      </div>
+
+      {/* 4. Complete uncropped image with gentle Ken Burns slow zoom */}
       <div className="relative z-10 w-full h-full flex items-center justify-center p-4 sm:p-8 md:p-12">
-        <div className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center">
+        <div
+          className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center"
+          style={{
+            animation: "kenBurnsZoom 3s cubic-bezier(0.25, 1, 0.5, 1) forwards",
+          }}
+        >
           <Image
             src="/brand/curtain-opening.jpg"
             alt="Purva Ocean Adventures - Discover • Dive • Connect"
             fill
             priority
             sizes="100vw"
-            className="object-contain drop-shadow-[0_20px_60px_rgba(0,15,35,0.85)]"
+            className="object-contain drop-shadow-[0_20px_60px_rgba(0,15,35,0.9)]"
           />
         </div>
       </div>
+    </div>
+  );
 
-      {/* Subtle bottom edge lift highlight to give physical curtain weight */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] bg-sky-300/30" />
+  return (
+    <div
+      role="status"
+      aria-label="Purva Ocean Adventures - Discover • Dive • Connect"
+      onClick={startOpening}
+      className={`fixed inset-0 z-[9999] overflow-hidden select-none cursor-pointer ${
+        isOpening ? "pointer-events-none" : "pointer-events-auto"
+      }`}
+    >
+      {/* 60fps lightweight hardware-accelerated animations */}
+      <style>{`
+        @keyframes kenBurnsZoom {
+          0% { transform: scale(1); }
+          100% { transform: scale(1.04); }
+        }
+        @keyframes sunlightDrift {
+          0% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
+          50% { transform: translate3d(4%, 3%, 0) rotate(0.8deg); }
+          100% { transform: translate3d(-4%, -4%, 0) rotate(0deg); }
+        }
+        @keyframes bubbleRise {
+          0% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
+          20% { opacity: 0.8; }
+          80% { opacity: 0.8; }
+          100% { transform: translate3d(10px, -90px, 0) scale(1.2); opacity: 0; }
+        }
+      `}</style>
+
+      {/* LEFT CURTAIN WING (Opens smoothly from centre towards left) */}
+      <div
+        className="absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden will-change-transform bg-[#011425]"
+        style={{
+          transform: isOpening ? "translate3d(-100%, 0, 0)" : "translate3d(0, 0, 0)",
+          transition: `transform ${CURTAIN_OPEN_MS}ms cubic-bezier(0.7, 0, 0.2, 1)`,
+          boxShadow: isOpening ? "-20px 0 50px rgba(0, 0, 0, 0.85)" : "none",
+        }}
+      >
+        {renderSceneHalf("left")}
+
+        {/* Luminous center seam edge highlight on left wing */}
+        <div
+          className="absolute top-0 bottom-0 right-0 w-[2px] bg-gradient-to-b from-sky-400/0 via-sky-300/80 to-sky-400/0 transition-opacity duration-250"
+          style={{ opacity: isOpening ? 0 : 0.85 }}
+        />
+      </div>
+
+      {/* RIGHT CURTAIN WING (Opens smoothly from centre towards right) */}
+      <div
+        className="absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden will-change-transform bg-[#011425]"
+        style={{
+          transform: isOpening ? "translate3d(100%, 0, 0)" : "translate3d(0, 0, 0)",
+          transition: `transform ${CURTAIN_OPEN_MS}ms cubic-bezier(0.7, 0, 0.2, 1)`,
+          boxShadow: isOpening ? "20px 0 50px rgba(0, 0, 0, 0.85)" : "none",
+        }}
+      >
+        {renderSceneHalf("right")}
+
+        {/* Luminous center seam edge highlight on right wing */}
+        <div
+          className="absolute top-0 bottom-0 left-0 w-[2px] bg-gradient-to-b from-sky-400/0 via-sky-300/80 to-sky-400/0 transition-opacity duration-250"
+          style={{ opacity: isOpening ? 0 : 0.85 }}
+        />
+      </div>
     </div>
   );
 }
