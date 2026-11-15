@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTripBySlug, getSiteSettings } from "@/lib/sanity/data";
 import { getCuratedTrip, CURATED_TRIPS } from "@/lib/data/curatedTrips";
-import { getSiteContentStore } from "@/lib/data/siteStore";
+import { getSiteContentStore, getLiveSiteContentStore } from "@/lib/data/siteStore";
 import { Container } from "@/components/ui/Container";
 import { buildWhatsAppUrl } from "@/lib/integrations/whatsapp";
 import { TripDetailShowcase } from "@/components/trips/TripDetailShowcase";
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const store = getSiteContentStore();
+  const store = await getLiveSiteContentStore();
   const curated = store.trips.find((t) => t.slug === slug) || getCuratedTrip(slug);
   if (curated) {
     return {
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function TripDetailPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const store = getSiteContentStore();
+  const store = await getLiveSiteContentStore();
   const curated = store.trips.find((t) => t.slug === slug) || getCuratedTrip(slug);
   const settings = await getSiteSettings().catch(() => null);
 

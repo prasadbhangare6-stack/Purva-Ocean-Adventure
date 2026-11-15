@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DiveCertificationsShowcase } from "@/components/courses/DiveCertificationsShowcase";
-import { getSiteContentStore } from "@/lib/data/siteStore";
+import { getLiveSiteContentStore } from "@/lib/data/siteStore";
 
 export const metadata: Metadata = {
   title: "Dive Certifications | Purva Ocean Adventures",
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     "Explore PADI Scuba Diving Certifications by Purva Ocean Adventures: Open Water Diver, Advanced Open Water Diver, and Specialty Diver courses.",
 };
 
-export default function CoursesPage() {
-  const store = getSiteContentStore();
+export default async function CoursesPage() {
+  const store = await getLiveSiteContentStore();
 
   return <DiveCertificationsShowcase initialCourses={store.courses} />;
 }

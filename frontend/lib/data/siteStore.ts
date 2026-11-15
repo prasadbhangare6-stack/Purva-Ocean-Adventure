@@ -190,9 +190,14 @@ export function getSiteContentStore(): SiteContentStore {
 /** Async fetch that checks Vercel Blob first for distributed multi-instance synchronization */
 export async function getLiveSiteContentStore(): Promise<SiteContentStore> {
   try {
-    const res = await fetch(BLOB_STORE_URL, {
+    const url = `${BLOB_STORE_URL}?v=${Date.now()}`;
+    const res = await fetch(url, {
       cache: "no-store",
-      headers: { "Accept": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+      },
     });
     if (res.ok) {
       const blobData = (await res.json()) as Partial<SiteContentStore>;

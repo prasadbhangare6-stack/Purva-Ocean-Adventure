@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { UpcomingTripsShowcase, type UpcomingTripItem } from "@/components/trips/UpcomingTripsShowcase";
-import { getSiteContentStore } from "@/lib/data/siteStore";
+import { getLiveSiteContentStore } from "@/lib/data/siteStore";
 
 export const metadata: Metadata = {
   title: "Upcoming Trips | Purva Ocean Adventures",
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     "Explore upcoming dive trips by Purva Ocean Adventures: Maafushi Madness Maldives, Lakshadweep Love, and Maldives Liveaboard expeditions.",
 };
 
-export default function TripsPage() {
-  const store = getSiteContentStore();
+export default async function TripsPage() {
+  const store = await getLiveSiteContentStore();
   const initialTrips: UpcomingTripItem[] = store.trips.map((t) => {
     const spots = typeof t.remainingSpots === "number" ? t.remainingSpots : undefined;
     return {
