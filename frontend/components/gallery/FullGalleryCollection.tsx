@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils/cn";
 import {
   ArrowLeft,
   Play,
+  Film,
   CheckCircle2,
 } from "lucide-react";
 import { ALL_GALLERY_PHOTOS as BASE_GALLERY_PHOTOS, type FullPhotoItem } from "@/lib/data/curatedGallery";
@@ -35,99 +36,6 @@ const CATEGORIES: CategoryFilter[] = [
 ];
 
 const isVideoSrc = (src: string) => /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
-
-function MasonryCard({
-  photo,
-  isTarget,
-  onClick,
-}: {
-  photo: FullPhotoItem;
-  isTarget: boolean;
-  onClick: () => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  const isVideo = isVideoSrc(photo.src);
-  const imageSrc = isVideo && photo.poster ? photo.poster : photo.src;
-
-  return (
-    <div
-      id={`photo-${photo.id}`}
-      role="button"
-      tabIndex={0}
-      aria-label={`View ${photo.title}`}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={cn(
-        "group relative block w-full overflow-hidden rounded-2xl sm:rounded-3xl border bg-[#02182c]/80 shadow-[0_12px_36px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1.5 break-inside-avoid mb-4 sm:mb-5",
-        isTarget
-          ? "border-[#E8C58F] ring-4 ring-[#E8C58F]/60 ring-offset-4 ring-offset-[#010f20] scale-[1.02]"
-          : "border-white/15",
-      )}
-    >
-      <div
-        className={cn(
-          "relative w-full overflow-hidden",
-          photo.aspect === "portrait"
-            ? "aspect-[3/4]"
-            : photo.aspect === "square"
-              ? "aspect-square"
-              : "aspect-[13/9]",
-        )}
-      >
-        {/* Instant optimized Next.js poster image */}
-        <Image
-          src={imageSrc}
-          alt={photo.alt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-        />
-
-        {/* Video preview: ONLY mounted on hover to avoid network congestion */}
-        {isVideo && isHovered && (
-          <video
-            src={photo.src}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="none"
-            className="absolute inset-0 size-full object-cover transition-opacity duration-300"
-          />
-        )}
-
-        {/* Video indicator badge */}
-        {isVideo && (
-          <div className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider uppercase text-white/95 border border-white/20 shadow-md">
-            <Play className="size-3 fill-current text-[#E8C58F]" />
-            <span>Video</span>
-          </div>
-        )}
-
-        {/* Subtle hover vignette */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-        {/* Top expand/play icon on hover */}
-        <div className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-md p-2 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow border border-white/15">
-          <Play className="size-4 fill-current text-[#E8C58F]" />
-        </div>
-
-        {/* Card info overlay on hover */}
-        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 z-10 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-[#010f20]/95 via-[#010f20]/60 to-transparent">
-          <p className="font-serif text-sm font-semibold text-white truncate drop-shadow-sm">{photo.title}</p>
-          <p className="text-[0.65rem] text-sky-200/90 tracking-wider uppercase">{photo.location}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function GalleryContent() {
   const searchParams = useSearchParams();
@@ -222,28 +130,36 @@ function GalleryContent() {
             <div className="max-w-3xl">
               <div className="flex items-center gap-3">
                 <span className="text-[0.68rem] sm:text-xs font-semibold tracking-[0.24em] text-sky-300 uppercase">
-                  COMPLETE COLLECTION
+                  PURVA VISUAL ARCHIVE
                 </span>
-                <span className="h-px w-16 sm:w-24 bg-sky-300/40" />
+                <span className="h-px w-20 bg-sky-300/40" />
               </div>
-              <h1 className="mt-3 font-serif text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-white leading-[1.08]">
-                Expedition <span className="font-serif italic font-normal text-[#8ec8f6]">Archives</span>
+
+              <h1 className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white leading-[1.08]">
+                Complete Ocean <span className="italic font-normal text-[#8ec8f6]">Gallery</span>
               </h1>
-              <p className="mt-4 sm:mt-5 max-w-2xl text-sm sm:text-base text-sky-100/85 font-light leading-relaxed">
-                Explore our full ocean archive of underwater photography and cinematic video captures across Maldives atolls, Lakshadweep lagoons, pelagic encounters, and intimate community dive moments.
+
+              <p className="mt-5 sm:mt-6 text-sm sm:text-base text-sky-100/85 font-light leading-relaxed max-w-2xl">
+                Explore our full collection of underwater encounters, pelagic highways, vibrant coral sanctuaries, and scuba diving reels across the Maldives, Lakshadweep, and beyond. Click any photograph or video to view in cinematic full-screen.
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="rounded-2xl border border-white/15 bg-[#02182c]/70 px-4 py-3 backdrop-blur-md">
-                <p className="text-[0.65rem] uppercase tracking-wider text-sky-300 font-semibold">Total Captures</p>
-                <p className="font-serif text-2xl font-bold text-white mt-0.5">{photos.length}</p>
+            {/* Quick summary info badge */}
+            <div className="flex items-center gap-3 self-start lg:self-end rounded-2xl border border-white/10 bg-white/5 px-5 py-3 backdrop-blur-md">
+              <Film className="size-5 text-[#E8C58F]" />
+              <div className="text-left">
+                <div className="text-xs uppercase tracking-wider font-semibold text-white">
+                  {photos.length} Gallery Captures
+                </div>
+                <div className="text-[0.7rem] text-foam/70">
+                  Showing {filteredPhotos.length} {activeCategory === "ALL" ? "items" : activeCategory.toLowerCase()}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Category Filters */}
+        {/* Filter Category Pills */}
         <div className="mt-8 flex flex-wrap items-center gap-2 sm:gap-3">
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat;
@@ -253,10 +169,10 @@ function GalleryContent() {
                 type="button"
                 onClick={() => setActiveCategory(cat)}
                 className={cn(
-                  "rounded-full px-4 sm:px-5 py-1.5 sm:py-2 text-xs uppercase tracking-wider font-semibold transition-all duration-300 cursor-pointer select-none",
+                  "rounded-full px-5 py-2 text-xs tracking-wider uppercase font-semibold transition-all duration-300 cursor-pointer select-none",
                   isActive
-                    ? "bg-[#E8C58F] text-[#010f20] font-bold shadow-md shadow-[#E8C58F]/20 scale-105"
-                    : "bg-[#02182c]/70 backdrop-blur-sm text-white/80 border border-white/20 hover:border-white/50 hover:text-white hover:bg-white/10 active:scale-95",
+                    ? "bg-[#E8C58F] text-[#010F20] font-bold shadow-lg shadow-[#E8C58F]/25 scale-105"
+                    : "bg-white/5 text-white/80 border border-white/20 hover:border-white/50 hover:text-white hover:bg-white/10 active:scale-95",
                 )}
               >
                 {cat}
@@ -285,14 +201,71 @@ function GalleryContent() {
                 ),
           )}
         >
-          {filteredPhotos.map((photo) => (
-            <MasonryCard
-              key={photo.id}
-              photo={photo}
-              isTarget={highlightedId === photo.id}
-              onClick={() => openLightboxById(photo.id)}
-            />
-          ))}
+          {filteredPhotos.map((photo) => {
+            const isTarget = highlightedId === photo.id;
+            return (
+              <div
+                key={photo.id}
+                id={`photo-${photo.id}`}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${photo.title}`}
+                onClick={() => openLightboxById(photo.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openLightboxById(photo.id);
+                  }
+                }}
+                className={cn(
+                  "group relative block w-full overflow-hidden rounded-2xl sm:rounded-3xl border bg-[#02182c]/80 shadow-[0_12px_36px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1.5",
+                  filteredPhotos.length >= 4 && "break-inside-avoid mb-4 sm:mb-5",
+                  isTarget
+                    ? "border-[#E8C58F] ring-4 ring-[#E8C58F]/60 ring-offset-4 ring-offset-[#010f20] scale-[1.02]"
+                    : "border-white/15",
+                )}
+              >
+                <div
+                  className={cn(
+                    "relative w-full overflow-hidden",
+                    photo.aspect === "portrait"
+                      ? "aspect-[3/4]"
+                      : photo.aspect === "square"
+                        ? "aspect-square"
+                        : "aspect-[13/9]",
+                  )}
+                >
+                  {isVideoSrc(photo.src) ? (
+                    <video
+                      src={photo.src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 size-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                    />
+                  )}
+
+                  {/* Subtle hover vignette */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  {/* Top expand/play icon on hover */}
+                  <div className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-md p-2 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow border border-white/15">
+                    <Play className="size-4 fill-current" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Container>
 

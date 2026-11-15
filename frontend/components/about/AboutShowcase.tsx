@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { OceanAtmosphere } from "@/components/ui/OceanAtmosphere";
 
 /**
@@ -13,32 +11,8 @@ import { OceanAtmosphere } from "@/components/ui/OceanAtmosphere";
  * - Bottom: 4 feature pillars (Ocean First, A Community, Real Experiences, Safety & Excellence).
  */
 export function AboutShowcase() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          videoRef.current?.play().then(() => setIsVideoPlaying(true)).catch(() => {});
-        } else {
-          videoRef.current?.pause();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section
-      ref={containerRef}
       id="about"
       className="relative isolate flex min-h-screen min-h-dvh w-full flex-col justify-between overflow-hidden bg-[#02162e] text-white select-none scroll-mt-20 pt-16 sm:pt-20 pb-3 sm:pb-4"
     >
@@ -70,35 +44,21 @@ export function AboutShowcase() {
       <div className="relative z-10 mx-auto my-auto grid w-full max-w-7xl grid-cols-1 items-center gap-6 px-6 sm:px-10 lg:px-16 lg:grid-cols-12 lg:gap-8 xl:gap-12 pt-1 pb-2 flex-1 min-h-0">
         {/* Left 5 Columns: Attached Looping Video with Cinematic Ocean Blend */}
         <div className="relative order-2 lg:order-1 lg:col-span-5 h-[260px] sm:h-[340px] lg:h-[44vh] max-h-[420px] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(2,132,199,0.24)] border border-sky-400/25 bg-[#011425]">
-          {/* Instant poster placeholder */}
-          <div
-            className={`absolute inset-0 size-full transition-opacity duration-700 z-[1] ${
-              isVideoPlaying ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`}
-          >
-            <Image
-              src="/media/P4.jpg"
-              alt="Dr. Purva exploring vibrant ocean reefs"
-              fill
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover object-center"
-            />
-          </div>
-
           <video
-            ref={videoRef}
+            autoPlay
             loop
             muted
             playsInline
-            preload="metadata"
-            className="absolute inset-0 size-full object-cover object-center scale-[1.02] transition-transform duration-700 hover:scale-105 z-[2]"
+            preload="auto"
+            poster="/media/P4.jpg"
+            className="size-full object-cover object-center scale-[1.02] transition-transform duration-700 hover:scale-105"
           >
             <source src="/media/about-video.mp4" type="video/mp4" />
           </video>
           {/* Soft ocean gradient feathering on the edges to blend into background */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 sm:w-1/4 bg-gradient-to-l from-[#021832]/75 via-[#021832]/25 to-transparent hidden lg:block z-[3]" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/5 sm:h-1/4 bg-gradient-to-t from-[#021832]/75 via-[#021832]/25 to-transparent z-[3]" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-1/6 bg-gradient-to-b from-[#021832]/30 to-transparent z-[3]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 sm:w-1/4 bg-gradient-to-l from-[#021832]/75 via-[#021832]/25 to-transparent hidden lg:block" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/5 sm:h-1/4 bg-gradient-to-t from-[#021832]/75 via-[#021832]/25 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-1/6 bg-gradient-to-b from-[#021832]/30 to-transparent" />
         </div>
 
         {/* Right 7 Columns: Brand Narrative shifted slightly upward with crisp vertical fit */}
@@ -116,51 +76,73 @@ export function AboutShowcase() {
             <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] xl:text-[2.85rem] font-bold uppercase tracking-tight leading-[1.04]">
               <span className="text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.5)]">PURVA OCEAN</span>
               <br />
-              <span className="font-light italic text-[#7dd3fc]">ADVENTURES</span>
+              <span className="text-[#60a5fa] drop-shadow-[0_2px_16px_rgba(96,165,250,0.45)]">
+                ADVENTURES
+              </span>
             </h1>
-            <p className="mt-1 font-serif text-xs sm:text-sm md:text-base italic text-sky-200/90 tracking-wide font-normal">
-              Connecting People with the Ocean
+            <p className="mt-1 font-serif text-xs sm:text-sm md:text-[0.95rem] italic font-light text-sky-100/95 tracking-wide">
+              Every great story begins somewhere.
             </p>
           </div>
 
-          {/* Core Story Paragraphs */}
-          <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-[0.84rem] md:text-[0.88rem] leading-relaxed text-sky-100/90 font-light">
+          {/* Body Paragraphs */}
+          <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-[0.78rem] md:text-[0.82rem] text-slate-200/90 font-normal leading-relaxed">
             <p>
-              Born from a deep passion for the underwater world, <strong className="font-semibold text-white">Purva Ocean Adventures</strong> is dedicated to bringing people closer to the beauty, power, and serenity of the ocean.
+              In Sanskrit, Purva means first and East, the direction of the rising sun.
+              <br />
+              To us, it represents the beauty of beginning something new.
             </p>
-            <p>
-              Founded by <strong className="font-semibold text-white">Dr. Purva</strong>, a certified diver, traveler, and ocean advocate, our mission is to create unforgettable diving and travel experiences that inspire a deeper connection to marine life.
-            </p>
-            <p className="hidden sm:block">
-              Whether you are taking your very first breath underwater or are a seasoned diver exploring remote reefs, we design curated journeys that blend adventure, safety, and community.
-            </p>
-          </div>
 
-          {/* Dr. Purva Signature Card */}
-          <div className="pt-1">
-            <div className="inline-flex items-center gap-3 rounded-xl border border-sky-400/25 bg-[#021a36]/70 px-3.5 py-2 backdrop-blur-md shadow-sm">
-              <div className="size-2 rounded-full bg-[#38bdf8] animate-pulse" />
-              <div>
-                <p className="font-serif text-xs sm:text-sm font-semibold tracking-wide text-white">
-                  Dr. Purva
-                </p>
-                <p className="text-[0.62rem] sm:text-[0.68rem] tracking-[0.16em] uppercase text-sky-300 font-medium">
-                  Founder &amp; Ocean Advocate
-                </p>
-              </div>
+            <div className="space-y-0.5 text-white font-medium pl-1">
+              <p>&bull; A new adventure.</p>
+              <p>&bull; A new friendship.</p>
+              <p>&bull; A new way of seeing the world.</p>
+            </div>
+
+            <p>
+              We started Purva Ocean Adventures with a simple belief: the ocean is too extraordinary to experience alone. So we bring together people who are curious about the world, excited by the unknown, and ready to create stories worth telling.
+            </p>
+
+            <p>
+              Whether it&apos;s your very first dive or your hundredth, there&apos;s always something new waiting beneath the surface.
+            </p>
+
+            {/* Cyan-bordered Callout quote matching mockup */}
+            <div className="border-l-2 border-sky-400 pl-3 sm:pl-3.5 py-0.5 space-y-0.5 text-sky-100 font-medium text-xs sm:text-[0.8rem] bg-sky-500/[0.06] rounded-r-xl">
+              <p>Come for the ocean.</p>
+              <p>Stay for the stories.</p>
+              <p>Leave with a little more wonder.</p>
+            </div>
+
+            {/* Next Chapter sign-off */}
+            <div className="pt-0.5 text-xs sm:text-[0.8rem]">
+              <p className="text-slate-200/90">
+                Your next chapter begins{" "}
+                <a
+                  href="#upcoming-trips"
+                  className="font-semibold text-white underline underline-offset-4 decoration-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
+                >
+                  here.
+                </a>
+              </p>
+              <p className="mt-0.5 font-sans text-xs sm:text-[0.8rem] font-black tracking-[0.24em] text-white uppercase drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)]">
+                DISCOVER. DIVE. CONNECT.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom 4 Feature Pillars */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16 pt-2 pb-2 shrink-0">
-        <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4 lg:gap-4 border-t border-sky-400/20 pt-2.5 sm:pt-3">
+      {/* Bottom 4 Feature Pillars matching design mock */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16 shrink-0 pt-2 border-t border-sky-400/20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 py-0.5">
           {/* Pillar 1: Ocean First */}
           <div className="group flex flex-col items-start pr-2 sm:pr-4 lg:border-r border-sky-400/15 p-1.5 sm:p-2 rounded-xl transition-all duration-300 hover:bg-sky-400/[0.06] hover:-translate-y-1 cursor-default">
             <div className="mb-1.5 sm:mb-2 inline-flex size-8 sm:size-9 items-center justify-center rounded-xl bg-sky-400/15 text-sky-300 border border-sky-400/30 shadow-[0_2px_10px_rgba(56,189,248,0.2)] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#E8C58F] group-hover:text-[#010F20] group-hover:border-[#E8C58F]">
-              <svg viewBox="0 0 24 24" className="size-4 sm:size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+              <svg viewBox="0 0 24 24" className="size-4 sm:size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M2 6c3.5-3 6.5-3 10 0s6.5 3 10 0" />
+                <path d="M2 12c3.5-3 6.5-3 10 0s6.5 3 10 0" />
+                <path d="M2 18c3.5-3 6.5-3 10 0s6.5 3 10 0" />
               </svg>
             </div>
             <h2 className="text-[0.7rem] sm:text-xs font-extrabold uppercase tracking-widest text-white transition-colors group-hover:text-[#bae6fd]">

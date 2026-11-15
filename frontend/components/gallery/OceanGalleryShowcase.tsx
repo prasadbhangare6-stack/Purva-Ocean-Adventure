@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
-import { ArrowRight, Maximize2, Play } from "lucide-react";
+import { ArrowRight, Maximize2 } from "lucide-react";
 import { ALL_GALLERY_PHOTOS, type FullPhotoItem } from "@/lib/data/curatedGallery";
 import { GalleryLightbox } from "./GalleryLightbox";
 
@@ -27,99 +27,6 @@ const CATEGORIES: GalleryCategory[] = [
 
 export type GalleryCardItem = FullPhotoItem;
 
-const isVideoSrc = (src: string) => /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
-
-function GalleryCard({
-  item,
-  extraClasses = "",
-  objectPos = "object-center",
-  onClick,
-}: {
-  item: GalleryCardItem;
-  extraClasses?: string;
-  objectPos?: string;
-  onClick: () => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  const isVideo = isVideoSrc(item.src);
-  const imageSrc = isVideo && item.poster ? item.poster : item.src;
-
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      title={`View ${item.title}`}
-      aria-label={`View ${item.title}`}
-      className={cn(
-        "group relative block h-full w-full min-h-0 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-[#02182c]/80 shadow-[0_12px_40px_rgba(0,0,0,0.45)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_18px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1",
-        extraClasses
-      )}
-    >
-      {/* Base Poster Image (Instant Load with Next.js Optimization) */}
-      <Image
-        src={imageSrc}
-        alt={item.alt}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        className={cn(
-          "object-cover transition-transform duration-700 ease-out group-hover:scale-105",
-          objectPos
-        )}
-      />
-
-      {/* Video preview: ONLY mounted on hover to prevent network congestion */}
-      {isVideo && isHovered && (
-        <video
-          src={item.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          className={cn(
-            "absolute inset-0 size-full object-cover transition-opacity duration-300",
-            objectPos
-          )}
-        />
-      )}
-
-      {/* Video indicator badge */}
-      {isVideo && (
-        <div className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider uppercase text-white/95 border border-white/20 shadow-md">
-          <Play className="size-3 fill-current text-[#E8C58F]" />
-          <span>Video</span>
-        </div>
-      )}
-
-      {/* Ambient hover vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      {/* Hover sheen sweep */}
-      <span className="pointer-events-none absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full transition-transform duration-700 ease-in-out group-hover:translate-x-[280%]" />
-
-      {/* Expand icon on hover */}
-      <div className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-md p-2 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-white/20">
-        <Maximize2 className="size-3.5 text-[#E8C58F]" />
-      </div>
-
-      {/* Bottom title tooltip on hover */}
-      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 z-10 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-[#010f20]/95 via-[#010f20]/60 to-transparent">
-        <p className="font-serif text-sm font-semibold text-white truncate drop-shadow-sm">{item.title}</p>
-        <p className="text-[0.65rem] text-sky-200/90 tracking-wider uppercase">{item.location}</p>
-      </div>
-    </div>
-  );
-}
-
 export function OceanGalleryShowcase() {
   const [activeTab, setActiveTab] = useState<GalleryCategory>("ALL");
   const [items, setItems] = useState<GalleryCardItem[]>(ALL_GALLERY_PHOTOS);
@@ -136,7 +43,6 @@ export function OceanGalleryShowcase() {
             category: (g.category as GalleryCardItem["category"]) || "UNDERWATER",
             categoryLabel: g.categoryLabel || "Underwater",
             src: g.src,
-            poster: g.poster,
             alt: g.alt || g.title,
             location: g.location || "Maldives",
             description: g.description || "",
@@ -153,6 +59,8 @@ export function OceanGalleryShowcase() {
     return items.filter((item) => item.category === activeTab);
   }, [items, activeTab]);
 
+  const isVideoSrc = (src: string) => /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
+
   const findById = (id: string, fallbackIndex: number): GalleryCardItem =>
     items.find((i) => i.id === id) || items[fallbackIndex] || ALL_GALLERY_PHOTOS[0];
 
@@ -163,33 +71,124 @@ export function OceanGalleryShowcase() {
     }
   };
 
-  // Dedicated layout items for the cinematic bento grid
-  const card1 = findById("shark-highres", 0);
+  const renderCard = (item: GalleryCardItem, extraClasses: string = "", objectPos: string = "object-center") => {
+    if (!item) return null;
+
+    return (
+      <div
+        key={item.id}
+        role="button"
+        tabIndex={0}
+        onClick={() => openLightboxForItem(item)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openLightboxForItem(item);
+          }
+        }}
+        title={`View ${item.title}`}
+        aria-label={`View ${item.title}`}
+        className={cn(
+          "group relative block h-full w-full min-h-0 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-[#02182c]/80 shadow-[0_12px_40px_rgba(0,0,0,0.45)] cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_18px_50px_rgba(0,0,0,0.7)] hover:-translate-y-1",
+          extraClasses,
+        )}
+      >
+        {isVideoSrc(item.src) ? (
+          <video
+            src={item.src}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className={cn(
+              "absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105",
+              objectPos,
+            )}
+          />
+        ) : (
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className={cn(
+              "object-cover transition-transform duration-700 ease-out group-hover:scale-105",
+              objectPos,
+            )}
+          />
+        )}
+
+        {/* Ambient hover vignette */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010f20]/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        {/* Hover sheen sweep */}
+        <span className="pointer-events-none absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full transition-transform duration-700 ease-in-out group-hover:translate-x-[280%]" />
+
+        {/* Expand icon on hover */}
+        <div className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-md p-2 text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border border-white/20">
+          <Maximize2 className="size-3.5 text-[#E8C58F]" />
+        </div>
+      </div>
+    );
+  };
+
+  const card1 = findById("shark-sunbeams", 0);
   const card2Top = findById("golden-anthias-garden", 1);
   const card2BotLeft = findById("hawksbill-turtle-glide", 2);
-  const card2BotRight = findById("porcupinefish-deep-reef", 3);
-  const card3Tall = findById("acropora-coral-formation", 4);
-  const card4Tall = findById("eagle-ray-pelagic", 5);
+  const card2BotRight = findById("diver-reef-wall", 6);
+  const card3Tall = findById("eagle-ray-squadron", 8);
+  const card4Tall = findById("diver-turtle-swim", 7);
 
   return (
     <section
       id="gallery"
-      className="relative isolate flex min-h-screen min-h-dvh w-full flex-col justify-between overflow-hidden bg-[#010f20] text-white select-none scroll-mt-20 pt-16 sm:pt-20 pb-4 sm:pb-6"
+      className="relative isolate flex min-h-screen min-h-dvh w-full flex-col justify-between overflow-hidden bg-[#02182c] pt-20 sm:pt-24 pb-4 sm:pb-6 select-none scroll-mt-20"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#02182c] via-[#011427] to-[#010f20]" />
-        <div className="absolute -top-32 left-1/4 h-[550px] w-[550px] rounded-full bg-[#0284c7]/20 blur-[140px]" />
-        <div className="absolute bottom-10 right-10 h-[500px] w-[500px] rounded-full bg-[#38bdf8]/15 blur-[130px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(56,189,248,0.22),transparent_70%)]" />
+      {/* Background Lighting */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#02182c] via-[#022442] to-[#011427]"
+        aria-hidden="true"
+      />
+
+      {/* Top-Right Corner Background Image */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden select-none sm:h-[600px] lg:h-[680px]"
+        aria-hidden="true"
+        style={{
+          WebkitMaskImage:
+            "radial-gradient(ellipse 68% 72% at 72% 24%, rgba(0,0,0,1) 28%, rgba(0,0,0,0.72) 52%, rgba(0,0,0,0.18) 76%, rgba(0,0,0,0) 96%)",
+          maskImage:
+            "radial-gradient(ellipse 68% 72% at 72% 24%, rgba(0,0,0,1) 28%, rgba(0,0,0,0.72) 52%, rgba(0,0,0,0.18) 76%, rgba(0,0,0,0) 96%)",
+        }}
+      >
+        <Image
+          src="/media/gallery-eagle-ray-bg.jpg"
+          alt="Two spotted eagle rays gliding gracefully through sunlit tropical ocean"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[76%_18%] opacity-90"
+        />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#02182c]/55 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-1 flex-col justify-between px-6 sm:px-10 lg:px-16 min-h-0">
-        {/* Header row: Title + Description + CTA */}
-        <div className="shrink-0 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-white/15 pb-4 sm:pb-5">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(ellipse_at_65%_0%,rgba(110,195,255,0.2)_0%,rgba(2,24,44,0)_70%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -left-20 top-1/4 h-[450px] w-[450px] rounded-full bg-[radial-gradient(circle,rgba(30,95,160,0.12)_0%,transparent_70%)] blur-2xl"
+        aria-hidden="true"
+      />
+
+      {/* Main Container */}
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-between px-6 sm:px-10 lg:px-16 flex-1 min-h-0">
+        {/* Top Header Row */}
+        <div className="shrink-0 flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3">
-              <span className="text-[0.68rem] sm:text-xs font-bold tracking-[0.24em] text-sky-300 uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]">
+              <span className="text-[0.65rem] sm:text-xs font-semibold tracking-[0.24em] text-sky-300 uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]">
                 VISUAL COLLECTION
               </span>
               <span className="h-px w-16 sm:w-24 bg-sky-300/45" />
@@ -237,34 +236,34 @@ export function OceanGalleryShowcase() {
           })}
         </div>
 
-        {/* Video & Photo Grid Area */}
+        {/* Video Grid Area */}
         <div className="relative z-10 flex-1 min-h-0 my-auto flex w-full items-center">
           {activeTab === "ALL" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1.65fr_1fr_1fr] gap-3 sm:gap-3.5 w-full h-[46vh] sm:h-[48vh] lg:h-[50vh] max-h-[465px]">
               <div className="h-full w-full min-h-0">
-                <GalleryCard item={card1} onClick={() => openLightboxForItem(card1)} />
+                {renderCard(card1)}
               </div>
 
               <div className="h-full w-full min-h-0 flex flex-col gap-3 sm:gap-3.5">
                 <div className="flex-[1.15] min-h-0 w-full">
-                  <GalleryCard item={card2Top} onClick={() => openLightboxForItem(card2Top)} />
+                  {renderCard(card2Top)}
                 </div>
                 <div className="flex-1 min-h-0 w-full grid grid-cols-2 gap-3 sm:gap-3.5">
                   <div className="h-full w-full min-h-0">
-                    <GalleryCard item={card2BotLeft} objectPos="object-[50%_55%]" onClick={() => openLightboxForItem(card2BotLeft)} />
+                    {renderCard(card2BotLeft, "", "object-[50%_55%]")}
                   </div>
                   <div className="h-full w-full min-h-0">
-                    <GalleryCard item={card2BotRight} objectPos="object-[50%_45%]" onClick={() => openLightboxForItem(card2BotRight)} />
+                    {renderCard(card2BotRight, "", "object-[50%_45%]")}
                   </div>
                 </div>
               </div>
 
               <div className="h-full w-full min-h-0">
-                <GalleryCard item={card3Tall} onClick={() => openLightboxForItem(card3Tall)} />
+                {renderCard(card3Tall)}
               </div>
 
               <div className="h-full w-full min-h-0">
-                <GalleryCard item={card4Tall} onClick={() => openLightboxForItem(card4Tall)} />
+                {renderCard(card4Tall)}
               </div>
             </div>
           ) : (
@@ -278,7 +277,7 @@ export function OceanGalleryShowcase() {
             >
               {filteredItems.map((item) => (
                 <div key={item.id} className="h-full w-full min-h-0">
-                  <GalleryCard item={item} onClick={() => openLightboxForItem(item)} />
+                  {renderCard(item)}
                 </div>
               ))}
             </div>

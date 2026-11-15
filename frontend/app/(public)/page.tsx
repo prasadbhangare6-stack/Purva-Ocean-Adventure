@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 };
 
 const BACKGROUND_VIDEOS = [
+  "/media/V7.mp4",
   "/media/V4.mp4",
   "/media/V5.mp4",
-  "/media/V3.mp4",
 ];
 
 export default function HomePage() {

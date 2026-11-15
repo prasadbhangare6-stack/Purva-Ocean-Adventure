@@ -4,7 +4,6 @@ export type FullPhotoItem = {
   category: "UNDERWATER" | "CORALS" | "MARINE LIFE" | "DIVERS" | "EXPEDITIONS";
   categoryLabel: string;
   src: string;
-  poster?: string;
   alt: string;
   location: string;
   description: string;
@@ -18,7 +17,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "UNDERWATER",
     categoryLabel: "Underwater",
     src: "/media/gallery-shark-highres.jpg",
-    poster: "/media/gallery-shark-highres.jpg",
     alt: "Apex grey reef shark cruising through crystalline blue waters",
     location: "Rasdhoo Atoll, Maldives",
     description: "Sunlight cascades through pelagic blue as a reef shark cruises effortlessly beneath the surface.",
@@ -30,7 +28,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "CORALS",
     categoryLabel: "Corals",
     src: "/media/gallery-v12.mp4",
-    poster: "/media/gallery-diver-anthias.jpg",
     alt: "Vibrant orange anthias clouds hovering over flourishing hard corals with scuba diver",
     location: "Bangaram Reef, Lakshadweep",
     description: "Flourishing reef gardens alive with shimmering orange anthias and sunlit coral colonies.",
@@ -42,7 +39,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "MARINE LIFE",
     categoryLabel: "Marine Life",
     src: "/media/gallery-turtle-deep.jpg",
-    poster: "/media/gallery-turtle-deep.jpg",
     alt: "Hawksbill sea turtle gliding gently above reef fish in crystal-clear waters",
     location: "Baa Atoll Biosphere, Maldives",
     description: "A tranquil encounter gliding behind a resident hawksbill sea turtle over sunlit coral meadows.",
@@ -54,7 +50,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "UNDERWATER",
     categoryLabel: "Underwater",
     src: "/media/gallery-v9.mp4",
-    poster: "/media/gallery-diver-fish.jpg",
     alt: "Porcupinefish hovering over coral reef formations with diver exploring behind",
     location: "South Ari Atoll, Maldives",
     description: "Curious reef residents inspecting divers along vibrant coral ledges and sandy slopes.",
@@ -66,7 +61,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "CORALS",
     categoryLabel: "Corals",
     src: "/media/gallery-coral-formation.jpg",
-    poster: "/media/gallery-coral-formation.jpg",
     alt: "Pristine table and staghorn coral garden thriving under tropical Maldivian sun",
     location: "Bangaram Atoll, Lakshadweep",
     description: "Centuries-old acropora colonies creating sheltering habitats for thousands of tropical reef fish.",
@@ -78,7 +72,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "MARINE LIFE",
     categoryLabel: "Marine Life",
     src: "/media/gallery-v1.mp4",
-    poster: "/media/gallery-eagle-ray-bg.jpg",
     alt: "Spotted eagle ray swimming gracefully through clear deep blue water",
     location: "Alimatha Thila, Maldives",
     description: "Effortless wingbeats carrying a solitary spotted eagle ray through open oceanic currents.",
@@ -90,7 +83,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "CORALS",
     categoryLabel: "Corals",
     src: "/media/gallery-v8.mp4",
-    poster: "/media/gallery-coral-formation.jpg",
     alt: "School of yellow-striped snappers hovering above sculpted table coral shelves",
     location: "Kadmat Atoll, Lakshadweep",
     description: "Dense schools of striped snappers sheltering above broad table corals in clear coastal light.",
@@ -102,7 +94,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "DIVERS",
     categoryLabel: "Divers",
     src: "/media/gallery-diver-anthias.jpg",
-    poster: "/media/gallery-diver-anthias.jpg",
     alt: "Scuba diver suspended weightlessly surrounded by thousands of shimmering orange anthias",
     location: "North Malé Atoll, Maldives",
     description: "Floating weightlessly along dramatic reef drop-offs framed by crystalline water visibility.",
@@ -114,7 +105,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "EXPEDITIONS",
     categoryLabel: "Expeditions",
     src: "/media/gallery-v3.mp4",
-    poster: "/media/gallery-turtle-surface.jpg",
     alt: "Expedition diver drifting serenely beside a green sea turtle over the reef",
     location: "Agatti Lagoon, Lakshadweep",
     description: "Unforgettable small-group expedition moments sharing the reef calmly with ocean turtles.",
@@ -126,7 +116,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "EXPEDITIONS",
     categoryLabel: "Expeditions",
     src: "/media/gallery-reef-panorama.jpg",
-    poster: "/media/gallery-reef-panorama.jpg",
     alt: "Expansive panoramic vista of a coral reef edge dropping into the deep blue ocean",
     location: "Kadmat Atoll, Lakshadweep",
     description: "Untouched coral topography where outer atoll oceanic currents nourish thriving marine biodiversity.",
@@ -138,7 +127,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "DIVERS",
     categoryLabel: "Divers",
     src: "/media/gallery-diver-ladder.jpg",
-    poster: "/media/gallery-diver-ladder.jpg",
     alt: "Scuba diver climbing the boat ladder with dive gear after a successful expedition dive",
     location: "Maafushi Reef, Maldives",
     description: "Surfacing with huge smiles after an exhilarating channel drift with eagle rays and reef sharks.",
@@ -150,7 +138,6 @@ export const ALL_GALLERY_PHOTOS: FullPhotoItem[] = [
     category: "EXPEDITIONS",
     categoryLabel: "Expeditions",
     src: "/media/gallery-v10.mp4",
-    poster: "/media/gallery-card-3-tall.jpg",
     alt: "Squadron of spotted eagle rays gliding together over coral reef channel",
     location: "Vaavu Atoll Channel, Maldives",
     description: "A rare channel drift encounter watching an entire formation of spotted eagle rays fly past.",
