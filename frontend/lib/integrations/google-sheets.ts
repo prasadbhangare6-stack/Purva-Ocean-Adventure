@@ -26,24 +26,29 @@ function escapeCsv(field: unknown): string {
 }
 
 function ensureDataStorage(): void {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
 
-  if (!fs.existsSync(CSV_FILE)) {
-    const header = [
-      "Timestamp",
-      "Full Name",
-      "Email (Gmail)",
-      "Phone / WhatsApp",
-      "Trip / Dive Experience",
-      "Message & Notes",
-    ].map(escapeCsv).join(",") + "\n";
-    fs.writeFileSync(CSV_FILE, header, "utf-8");
-  }
+    if (!fs.existsSync(CSV_FILE)) {
+      const header = [
+        "Timestamp",
+        "Full Name",
+        "Email (Gmail)",
+        "Phone / WhatsApp",
+        "Trip / Dive Experience",
+        "Message & Notes",
+      ].map(escapeCsv).join(",") + "\n";
+      fs.writeFileSync(CSV_FILE, header, "utf-8");
+    }
 
-  if (!fs.existsSync(JSON_FILE)) {
-    fs.writeFileSync(JSON_FILE, "[]", "utf-8");
+    if (!fs.existsSync(JSON_FILE)) {
+      fs.writeFileSync(JSON_FILE, "[]", "utf-8");
+    }
+  } catch (err) {
+    // Expected on read-only environments like AWS Lambda / Vercel
+    console.warn("[google-sheets] Local filesystem is read-only, continuing with cloud integrations.");
   }
 }
 
@@ -67,7 +72,11 @@ function findTokenFilePath(): string | null {
   ];
 
   for (const p of possiblePaths) {
-    if (fs.existsSync(p)) return p;
+    try {
+      if (fs.existsSync(p)) return p;
+    } catch {
+      // Ignored
+    }
   }
   return null;
 }
@@ -111,7 +120,11 @@ async function getValidAccessToken(): Promise<string | null> {
         const newExpiry = new Date(Date.now() + (refreshed.expires_in || 3600) * 1000).toISOString();
         tokenData.token.expiry = newExpiry;
 
-        fs.writeFileSync(tokenPath, JSON.stringify(tokenData, null, 2), "utf-8");
+        try {
+          fs.writeFileSync(tokenPath, JSON.stringify(tokenData, null, 2), "utf-8");
+        } catch {
+          // Ignore read-only errors
+        }
         return refreshed.access_token;
       }
     }
@@ -195,7 +208,7 @@ export async function appendEnquiryToSheet(
 
   await appendToGoogleSheetApi(PRIMARY_SPREADSHEET_ID, googleSheetRow);
 
-  // 2. Append to local CSV spreadsheet as permanent local backup
+  // 2. Append to local CSV spreadsheet as permanent local backup (if writable)
   const csvRow = [
     formattedTimestamp,
     payload.fullName,
@@ -205,12 +218,19 @@ export async function appendEnquiryToSheet(
     payload.message || "",
   ].map(escapeCsv).join(",") + "\n";
 
-  fs.appendFileSync(CSV_FILE, csvRow, "utf-8");
-
-  // 3. Append to local JSON file
   try {
-    const raw = fs.readFileSync(JSON_FILE, "utf-8");
-    const list = JSON.parse(raw);
+    fs.appendFileSync(CSV_FILE, csvRow, "utf-8");
+  } catch {
+    // Read-only filesystem on cloud serverless
+  }
+
+  // 3. Append to local JSON file (if writable)
+  try {
+    let list = [];
+    if (fs.existsSync(JSON_FILE)) {
+      const raw = fs.readFileSync(JSON_FILE, "utf-8");
+      list = JSON.parse(raw);
+    }
     if (Array.isArray(list)) {
       list.push({
         id: `enq_${Date.now()}`,
@@ -233,7 +253,7 @@ export async function appendEnquiryToSheet(
       fs.writeFileSync(JSON_FILE, JSON.stringify(list, null, 2), "utf-8");
     }
   } catch (err) {
-    console.error("[enquiry-store] JSON sync failed:", err);
+    console.warn("[enquiry-store] JSON file sync skipped (read-only filesystem).");
   }
 
   // 4. Dispatch to remote Google Sheets Webhook if configured

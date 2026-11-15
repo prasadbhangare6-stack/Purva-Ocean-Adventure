@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import { usePrefersReducedMotion } from "@/lib/animations/hooks";
 import { cn } from "@/lib/utils/cn";
 
 type VideoBackgroundProps = {
-  /** Optimised, compressed MP4/WebM URL (e.g. from Sanity). */
+  /** Optimised, compressed MP4/WebM URL. */
   src?: string | null;
   /** Multiple video URLs played sequentially in a continuous loop. */
   sources?: string[];
@@ -21,6 +22,7 @@ type VideoBackgroundProps = {
  * - Minimal, high-clarity scrim so the vibrant underwater footage is fully visible.
  * - Pauses when off-screen to save battery and bandwidth.
  * - Respects prefers-reduced-motion.
+ * - Lightweight preloading: only buffers active video, never congests network.
  */
 export function VideoBackground({ src, sources, poster, className }: VideoBackgroundProps) {
   const reduced = usePrefersReducedMotion();
@@ -33,6 +35,7 @@ export function VideoBackground({ src, sources, poster, className }: VideoBackgr
   const [activeSlot, setActiveSlot] = useState<"A" | "B">("A");
   const [slotAIndex, setSlotAIndex] = useState(0);
   const [slotBIndex, setSlotBIndex] = useState(1 % (playlist.length || 1));
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const refSingle = useRef<HTMLVideoElement>(null);
   const refA = useRef<HTMLVideoElement>(null);
@@ -94,11 +97,11 @@ export function VideoBackground({ src, sources, poster, className }: VideoBackgr
 
     const playActive = () => {
       if (!isMulti) {
-        void refSingle.current?.play().catch(() => {});
+        void refSingle.current?.play().then(() => setIsVideoLoaded(true)).catch(() => {});
       } else if (activeSlot === "A") {
-        void refA.current?.play().catch(() => {});
+        void refA.current?.play().then(() => setIsVideoLoaded(true)).catch(() => {});
       } else {
-        void refB.current?.play().catch(() => {});
+        void refB.current?.play().then(() => setIsVideoLoaded(true)).catch(() => {});
       }
     };
 
@@ -132,29 +135,36 @@ export function VideoBackground({ src, sources, poster, className }: VideoBackgr
       aria-hidden="true"
       className={cn("absolute inset-0 w-full h-full overflow-hidden bg-abyss select-none", className)}
     >
-      {/* Poster fallback */}
-      {(!playlist.length || reduced) && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+      {/* Instant high-res poster displayed immediately to prevent black screen / layout shifts */}
+      <div
+        className={cn(
+          "absolute inset-0 size-full transition-opacity duration-700 ease-out z-[1]",
+          isVideoLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
+        )}
+      >
+        <Image
           src={poster ?? "/media/hero-design.jpg"}
           alt=""
-          className="h-full w-full object-cover object-center"
-          loading="lazy"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
-      )}
+      </div>
 
       {/* Single video mode */}
       {!isMulti && playlist.length === 1 && !reduced && (
         <video
           ref={refSingle}
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full object-cover object-center z-[2]"
           src={playlist[0]}
           poster={poster ?? undefined}
           muted
           loop
           autoPlay
           playsInline
-          preload="auto"
+          preload="metadata"
+          onPlaying={() => setIsVideoLoaded(true)}
         />
       )}
 
@@ -165,33 +175,34 @@ export function VideoBackground({ src, sources, poster, className }: VideoBackgr
             ref={refA}
             className={cn(
               "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-in-out",
-              activeSlot === "A" ? "opacity-100 z-10" : "opacity-0 z-0",
+              activeSlot === "A" ? "opacity-100 z-[3]" : "opacity-0 z-[2]",
             )}
             src={playlist[slotAIndex]}
             muted
             autoPlay
             playsInline
-            preload="auto"
+            preload="metadata"
+            onPlaying={() => setIsVideoLoaded(true)}
             onEnded={() => handleSlotEnd("A")}
           />
           <video
             ref={refB}
             className={cn(
               "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-in-out",
-              activeSlot === "B" ? "opacity-100 z-10" : "opacity-0 z-0",
+              activeSlot === "B" ? "opacity-100 z-[3]" : "opacity-0 z-[2]",
             )}
             src={playlist[slotBIndex]}
             muted
             playsInline
-            preload="auto"
+            preload="none"
             onEnded={() => handleSlotEnd("B")}
           />
         </>
       )}
 
-      {/* Minimal directional scrim: gentle gradient only behind the text on the left, leaving the rest 100% full-screen crystal clear */}
-      <div className="absolute inset-0 bg-gradient-to-r from-abyss/75 via-abyss/25 to-transparent w-full md:w-3/5 pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-abyss/50 to-transparent pointer-events-none" />
+      {/* Minimal directional scrim */}
+      <div className="absolute inset-0 bg-gradient-to-r from-abyss/75 via-abyss/25 to-transparent w-full md:w-3/5 pointer-events-none z-[4]" />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-abyss/50 to-transparent pointer-events-none z-[4]" />
     </div>
   );
 }

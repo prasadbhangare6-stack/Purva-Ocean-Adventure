@@ -12,6 +12,7 @@
     "sanity": "sanity dev"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "gsap": "^3.15.1",
     "localtunnel": "^2.0.2",
     "lucide-react": "^1.70.0",

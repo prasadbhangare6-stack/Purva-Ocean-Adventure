@@ -2,24 +2,26 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/guards";
 import type { Resource, Action } from "@/lib/auth/roles";
-import { getSiteContentStore, saveSiteContentStore, type SiteContentStore } from "@/lib/data/siteStore";
+import { getLiveSiteContentStore, saveSiteContentStore } from "@/lib/data/siteStore";
 
 export const runtime = "nodejs";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const resource = (searchParams.get("resource") || "trips") as Resource;
-
+// Public GET allows client components (UpcomingTripsShowcase, OceanGalleryShowcase, etc.)
+// to fetch live data without throwing 401 Unauthorized for public visitors.
+export async function GET() {
   try {
-    await requirePermission(resource, "read", { mode: "throw" });
-    const store = getSiteContentStore();
-    return NextResponse.json({ success: true, data: store });
-  } catch (error) {
-    const isForbidden = error instanceof Error && error.name === "ForbiddenError";
+    const store = await getLiveSiteContentStore();
     return NextResponse.json(
-      { success: false, message: isForbidden ? "Forbidden: Insufficient permissions" : "Unauthorized" },
-      { status: isForbidden ? 403 : 401 }
+      { success: true, data: store },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      }
     );
+  } catch (error) {
+    console.error("[api/admin/content] GET error:", error);
+    return NextResponse.json({ success: false, message: "Error reading site content." }, { status: 500 });
   }
 }
 
@@ -36,10 +38,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "Resource name required." }, { status: 400 });
     }
 
-    // Server-side permission enforcement
+    // Server-side permission enforcement for mutations
     await requirePermission(resource, action, { mode: "throw" });
 
-    const store = getSiteContentStore();
+    const store = await getLiveSiteContentStore();
 
     switch (resource) {
       case "trips": {
@@ -127,7 +129,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, message: `Unsupported resource: ${resource}` }, { status: 400 });
     }
 
-    const updated = saveSiteContentStore(store);
+    const updated = await saveSiteContentStore(store);
 
     // Instant cache revalidation across all public pages
     try {
@@ -151,6 +153,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     const isForbidden = error instanceof Error && error.name === "ForbiddenError";
+    console.error("[api/admin/content] Mutation error:", error);
     return NextResponse.json(
       {
         success: false,

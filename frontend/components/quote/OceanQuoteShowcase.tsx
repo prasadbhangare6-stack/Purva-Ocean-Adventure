@@ -1,37 +1,74 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /**
  * Ocean Quote Showcase Page / Section:
  * Matches the user mockup exactly:
- * - Fullscreen background video of underwater sunbeams, shark, and marine life.
+ * - Lazy-loaded background video of underwater sunbeams, shark, and marine life.
+ * - Only buffers and plays when approaching the viewport to keep page load blazing fast.
  * - Three stacked ocean wave glyph with flanking horizontal hairline rules.
  * - Exact quote:
  *     “The ocean is the giver...
  *      We are just visitors.”
- *   with Cormorant Garamond serif font, white first line and soft sky-blue italic second line.
- * - Centered bottom horizontal hairline rule.
  */
 export function OceanQuoteShowcase() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          videoRef.current?.play().catch(() => {});
+        } else {
+          videoRef.current?.pause();
+        }
+      },
+      { rootMargin: "300px 0px" } // Preload when within 300px of view
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="ocean-quote"
       className="relative isolate flex min-h-screen min-h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#021020] select-none scroll-mt-20 pt-20 sm:pt-24 pb-3 sm:pb-5"
     >
-      {/* Background Video */}
+      {/* Background Poster (Displayed instantly with 0 video buffering lag) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/media/ocean-quote-mock.jpg"
-          className="size-full object-cover scale-[1.02]"
-        >
-          <source src="/media/V6.mp4" type="video/mp4" />
-          <source src="/media/quote-video.mp4" type="video/mp4" />
-        </video>
+        <Image
+          src="/media/ocean-quote-mock.jpg"
+          alt="Sunlight piercing deep ocean waters with manta rays"
+          fill
+          priority={false}
+          sizes="100vw"
+          className="object-cover object-center scale-[1.02]"
+        />
+
+        {/* Background Video (Only mounted / played when section is near viewport) */}
+        {shouldLoadVideo && (
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 size-full object-cover scale-[1.02] transition-opacity duration-1000"
+          >
+            <source src="/media/V6.mp4" type="video/mp4" />
+          </video>
+        )}
 
         {/* Cinematic soft vignette overlay so quote text is high-contrast and crystal-clear */}
         <div className="absolute inset-0 bg-radial from-transparent via-[#010b17]/25 to-[#010b17]/65 pointer-events-none" />
@@ -75,4 +112,3 @@ export function OceanQuoteShowcase() {
     </section>
   );
 }
-
